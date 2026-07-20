@@ -26,6 +26,7 @@ class _LichHocScreenState extends State<LichHocScreen> {
   @override
   void initState() {
     super.initState();
+    _selectedDay = DateTime.now().weekday + 1;
     _future = _load();
   }
 
@@ -57,18 +58,21 @@ class _LichHocScreenState extends State<LichHocScreen> {
             return ErrorView(message: snap.error.toString(), onRetry: _reload);
           }
           var list = snap.data ?? [];
-          
+
           // Nếu là giáo viên, chỉ hiển thị các tiết do mình dạy
           if (session.isTeacher && session.user?.fullName != null) {
-            list = list.where((s) => s.teacherName == session.user!.fullName).toList();
+            list = list
+                .where((s) => s.teacherName == session.user!.fullName)
+                .toList();
           }
 
           if (list.isEmpty) {
             return EmptyView(
-                icon: Icons.calendar_month_outlined,
-                message: session.isTeacher 
-                    ? 'Không có tiết dạy nào được phân công.' 
-                    : 'Chưa có thời khóa biểu.');
+              icon: Icons.calendar_month_outlined,
+              message: session.isTeacher
+                  ? 'Không có tiết dạy nào được phân công.'
+                  : 'Chưa có thời khóa biểu.',
+            );
           }
 
           // Nhóm theo thứ (dayOrder)
@@ -78,7 +82,7 @@ class _LichHocScreenState extends State<LichHocScreen> {
           }
           // Luôn hiển thị từ Thứ 2 (2) đến Chủ nhật (8)
           final days = [2, 3, 4, 5, 6, 7, 8];
-          
+
           int displayDay = _selectedDay ?? 2;
 
           final periods = byDay[displayDay] ?? [];
@@ -90,7 +94,9 @@ class _LichHocScreenState extends State<LichHocScreen> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  border: Border(bottom: BorderSide(color: Colors.grey.shade200)),
+                  border: Border(
+                    bottom: BorderSide(color: Colors.grey.shade200),
+                  ),
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 child: SingleChildScrollView(
@@ -105,18 +111,29 @@ class _LichHocScreenState extends State<LichHocScreen> {
                           onTap: () => setState(() => _selectedDay = d),
                           borderRadius: BorderRadius.circular(20),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 10),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 22,
+                              vertical: 10,
+                            ),
                             decoration: BoxDecoration(
-                              color: isSelected ? AppColors.primary : AppColors.surfaceTint.withValues(alpha: 0.2),
+                              color: isSelected
+                                  ? AppColors.primary
+                                  : AppColors.surfaceTint.withValues(
+                                      alpha: 0.2,
+                                    ),
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
-                                color: isSelected ? AppColors.primary : AppColors.border.withValues(alpha: 0.5),
+                                color: isSelected
+                                    ? AppColors.primary
+                                    : AppColors.border.withValues(alpha: 0.5),
                               ),
                             ),
                             child: Text(
                               Schedule.dayLabel(d),
                               style: TextStyle(
-                                color: isSelected ? Colors.white : AppColors.primaryDark,
+                                color: isSelected
+                                    ? Colors.white
+                                    : AppColors.primaryDark,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 14,
                               ),
@@ -128,7 +145,7 @@ class _LichHocScreenState extends State<LichHocScreen> {
                   ),
                 ),
               ),
-              
+
               // Danh sách tiết học của ngày đã chọn
               Expanded(
                 child: RefreshIndicator(
@@ -140,14 +157,36 @@ class _LichHocScreenState extends State<LichHocScreen> {
                           children: const [
                             EmptyView(
                               icon: Icons.weekend_outlined,
-                              message: 'Không có lịch học ngày hôm nay.\nHãy thư giãn và nạp lại năng lượng nhé!',
-                            )
+                              message:
+                                  'Không có lịch học ngày hôm nay.\nHãy thư giãn và nạp lại năng lượng nhé!',
+                            ),
                           ],
                         )
-                      : ListView.builder(
-                          padding: const EdgeInsets.all(16),
-                          itemCount: periods.length,
-                          itemBuilder: (context, i) => _periodTile(periods[i]),
+                      : ListView(
+                          padding: const EdgeInsets.fromLTRB(16, 18, 16, 28),
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    '${Schedule.dayLabel(displayDay)} · ${periods.length} tiết',
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w800,
+                                      color: AppColors.ink,
+                                    ),
+                                  ),
+                                ),
+                                const Icon(
+                                  Icons.timeline_rounded,
+                                  size: 20,
+                                  color: AppColors.inkLight,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 14),
+                            ...periods.map(_periodTile),
+                          ],
                         ),
                 ),
               ),
@@ -161,13 +200,12 @@ class _LichHocScreenState extends State<LichHocScreen> {
   Widget _periodTile(Schedule s) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: Colors.grey.shade200),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16),
+      clipBehavior: Clip.antiAlias,
+      child: Container(
+        decoration: const BoxDecoration(
+          border: Border(left: BorderSide(color: AppColors.primary, width: 4)),
+        ),
+        padding: const EdgeInsets.all(17),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -179,17 +217,29 @@ class _LichHocScreenState extends State<LichHocScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   if (s.startTime != null)
-                    Text(s.startTime!, 
-                      style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 15, color: AppColors.primaryDark)),
+                    Text(
+                      s.startTime!,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 15,
+                        color: AppColors.primaryDark,
+                      ),
+                    ),
                   if (s.endTime != null) ...[
                     const SizedBox(height: 4),
-                    Text(s.endTime!, 
-                      style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13, color: Colors.grey)),
-                  ]
+                    Text(
+                      s.endTime!,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
-            
+
             // Đường kẻ dọc
             Container(
               width: 1,
@@ -197,7 +247,7 @@ class _LichHocScreenState extends State<LichHocScreen> {
               margin: const EdgeInsets.symmetric(horizontal: 14),
               color: Colors.grey.shade300,
             ),
-            
+
             // Cột phải: Tag tiết, Môn học, Phòng, GV
             Expanded(
               child: Column(
@@ -207,40 +257,74 @@ class _LichHocScreenState extends State<LichHocScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.primary,
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Text(
                           'Tiết ${s.period}',
-                          style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       const SizedBox(width: 10),
                       Expanded(
-                        child: Text(s.subject, 
-                          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.ink)),
+                        child: Text(
+                          s.subject,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.ink,
+                          ),
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 10),
-                  
+
                   if (s.room != null)
                     Row(
                       children: [
-                        const Icon(Icons.meeting_room_outlined, size: 16, color: Colors.grey),
+                        const Icon(
+                          Icons.meeting_room_outlined,
+                          size: 16,
+                          color: Colors.grey,
+                        ),
                         const SizedBox(width: 6),
-                        Text('Phòng: ${s.room}', style: TextStyle(color: Colors.grey.shade800, fontSize: 13.5)),
+                        Text(
+                          'Phòng: ${s.room}',
+                          style: TextStyle(
+                            color: Colors.grey.shade800,
+                            fontSize: 13.5,
+                          ),
+                        ),
                       ],
                     ),
-                  if (s.room != null && s.teacherName != null) const SizedBox(height: 4),
+                  if (s.room != null && s.teacherName != null)
+                    const SizedBox(height: 4),
                   if (s.teacherName != null)
                     Row(
                       children: [
-                        const Icon(Icons.person_outline, size: 16, color: Colors.grey),
+                        const Icon(
+                          Icons.person_outline,
+                          size: 16,
+                          color: Colors.grey,
+                        ),
                         const SizedBox(width: 6),
-                        Text('GV: ${s.teacherName}', style: TextStyle(color: Colors.grey.shade800, fontSize: 13.5)),
+                        Text(
+                          'GV: ${s.teacherName}',
+                          style: TextStyle(
+                            color: Colors.grey.shade800,
+                            fontSize: 13.5,
+                          ),
+                        ),
                       ],
                     ),
                 ],

@@ -6,7 +6,7 @@ class NotificationItem {
   final String content;
   final int? senderId;
   final String? senderName;
-  final int? classId;   // null = thông báo toàn trường
+  final int? classId; // null = thông báo toàn trường
   final String? className;
   final String? createdAt; // ISO: 2026-07-01T19:04:07
 
@@ -28,7 +28,7 @@ class NotificationItem {
     final raw = createdAt;
     if (raw == null || raw.length < 16) return '';
     final d = raw.substring(0, 10).split('-'); // [yyyy, MM, dd]
-    final t = raw.substring(11, 16);           // HH:mm
+    final t = raw.substring(11, 16); // HH:mm
     return '${d[2]}/${d[1]}/${d[0]} $t';
   }
 
@@ -45,11 +45,11 @@ class NotificationItem {
       );
 
   Map<String, dynamic> toJson() => {
-        'title': title,
-        'content': content,
-        if (senderId != null) 'senderId': senderId,
-        if (senderName != null) 'senderName': senderName,
-        if (classId != null) 'classId': classId,
-        if (className != null) 'className': className,
-      };
+    'title': title,
+    'content': content,
+    if (senderId != null) 'senderId': senderId,
+    if (senderName != null) 'senderName': senderName,
+    if (classId != null) 'classId': classId,
+    if (className != null) 'className': className,
+  };
 }

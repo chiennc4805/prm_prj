@@ -21,13 +21,13 @@ class Club {
   });
 
   factory Club.fromJson(Map<String, dynamic> json) => Club(
-        id: json['id'] as int,
-        name: json['name'] as String,
-        description: json['description'] as String?,
-        category: json['category'] as String?,
-        meetingTime: json['meetingTime'] as String?,
-        location: json['location'] as String?,
-        contact: json['contact'] as String?,
-        memberCount: (json['memberCount'] ?? 0) as int,
-      );
+    id: json['id'] as int,
+    name: json['name'] as String,
+    description: json['description'] as String?,
+    category: json['category'] as String?,
+    meetingTime: json['meetingTime'] as String?,
+    location: json['location'] as String?,
+    contact: json['contact'] as String?,
+    memberCount: (json['memberCount'] ?? 0) as int,
+  );
 }

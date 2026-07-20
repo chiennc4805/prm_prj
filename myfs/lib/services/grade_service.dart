@@ -26,9 +26,14 @@ class GradeService {
 
   /// Danh sách điểm của lớp theo môn cho giáo viên
   static Future<List<Grade>> teacherClassGrades(
-      String teacherName, int classId, String subject, String semester) async {
+    String teacherName,
+    int classId,
+    String subject,
+    String semester,
+  ) async {
     final list = await ApiClient.getList(
-        '/api/grades/teacher/$teacherName/class/$classId/subject/$subject/semester/$semester');
+      '/api/grades/teacher/$teacherName/class/$classId/subject/$subject/semester/$semester',
+    );
     return list.map((e) => Grade.fromJson(e as Map<String, dynamic>)).toList();
   }
 

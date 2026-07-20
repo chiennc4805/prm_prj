@@ -80,7 +80,9 @@ class _ThongBaoScreenState extends State<ThongBaoScreen> {
           final list = snap.data ?? [];
           if (list.isEmpty) {
             return const EmptyView(
-                icon: Icons.notifications_none, message: 'Chưa có thông báo nào.');
+              icon: Icons.notifications_none,
+              message: 'Chưa có thông báo nào.',
+            );
           }
           return RefreshIndicator(
             onRefresh: () async => _reload(),
@@ -123,11 +125,7 @@ class _ThongBaoScreenState extends State<ThongBaoScreen> {
                   color: scopeColor.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  Icons.notifications,
-                  color: scopeColor,
-                  size: 26,
-                ),
+                child: Icon(Icons.notifications, color: scopeColor, size: 26),
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -136,17 +134,30 @@ class _ThongBaoScreenState extends State<ThongBaoScreen> {
                   children: [
                     Text(
                       n.title,
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.ink),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: AppColors.ink,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        Icon(Icons.access_time, size: 14, color: Colors.grey.shade600),
+                        Icon(
+                          Icons.access_time,
+                          size: 14,
+                          color: Colors.grey.shade600,
+                        ),
                         const SizedBox(width: 6),
-                        Text(n.createdAtLabel,
-                            style: TextStyle(fontSize: 13, color: Colors.grey.shade600)),
+                        Text(
+                          n.createdAtLabel,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
                       ],
                     ),
                   ],
@@ -190,8 +201,13 @@ class _ComposeSheetState extends State<_ComposeSheet> {
     final homeroom = session.homeroomClass;
 
     if (!_schoolWide && homeroom == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Bạn chưa có lớp chủ nhiệm — chỉ gửi được toàn trường.')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Bạn chưa có lớp chủ nhiệm — chỉ gửi được toàn trường.',
+          ),
+        ),
+      );
       return;
     }
 
@@ -222,7 +238,9 @@ class _ComposeSheetState extends State<_ComposeSheet> {
   Widget build(BuildContext context) {
     final homeroom = Session.instance.homeroomClass;
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
         child: Form(
@@ -231,8 +249,10 @@ class _ComposeSheetState extends State<_ComposeSheet> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text('Gửi thông báo',
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+              const Text(
+                'Gửi thông báo',
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 16),
               // Phạm vi gửi
               SegmentedButton<bool>(
@@ -284,7 +304,10 @@ class _ComposeSheetState extends State<_ComposeSheet> {
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(
-                            strokeWidth: 2.4, color: Colors.white))
+                          strokeWidth: 2.4,
+                          color: Colors.white,
+                        ),
+                      )
                     : const Icon(Icons.send),
                 label: Text(_sending ? 'Đang gửi...' : 'Gửi thông báo'),
               ),

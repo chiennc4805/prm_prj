@@ -2,9 +2,8 @@ package com.myfs.backend.controller;
 
 import com.myfs.backend.dao.EventDao;
 import com.myfs.backend.model.Event;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * REST API sự kiện.
@@ -14,13 +13,14 @@ import java.util.List;
 @RequestMapping("/api/events")
 public class EventController {
 
-    private final EventDao eventDao;
-    public EventController(EventDao eventDao) {
-        this.eventDao = eventDao;
-    }
+  private final EventDao eventDao;
 
-    @GetMapping
-    public List<Event> all() {
-        return eventDao.findAllByOrderByEventDateAsc();
-    }
+  public EventController(EventDao eventDao) {
+    this.eventDao = eventDao;
+  }
+
+  @GetMapping
+  public List<Event> all() {
+    return eventDao.findAllByOrderByEventDateAsc();
+  }
 }

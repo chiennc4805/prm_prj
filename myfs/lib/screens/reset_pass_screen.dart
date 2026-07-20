@@ -33,7 +33,7 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
     try {
       await AuthService.requestOtp(_phoneCtrl.text.trim());
       if (!mounted) return;
-      
+
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -43,7 +43,10 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString()), backgroundColor: AppColors.danger),
+        SnackBar(
+          content: Text(e.toString()),
+          backgroundColor: AppColors.danger,
+        ),
       );
     } finally {
       if (mounted) setState(() => _submitting = false);
@@ -67,7 +70,11 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
               const Text(
                 'Đặt lại mật khẩu',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.ink),
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.ink,
+                ),
               ),
               const SizedBox(height: 8),
               const Text(
@@ -98,8 +105,13 @@ class _ResetPassScreenState extends State<ResetPassScreen> {
                 onPressed: _submitting ? null : _submit,
                 child: _submitting
                     ? const SizedBox(
-                        width: 22, height: 22,
-                        child: CircularProgressIndicator(strokeWidth: 2.4, color: Colors.white))
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.4,
+                          color: Colors.white,
+                        ),
+                      )
                     : const Text('Đặt lại mật khẩu'),
               ),
             ],

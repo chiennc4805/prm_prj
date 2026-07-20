@@ -1,4 +1,4 @@
-# My F-School Web
+# FPT Schools Web
 
 Giao diện ReactJS dành cho Admin và Giáo viên.
 

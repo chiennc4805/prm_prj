@@ -17,11 +17,11 @@ class Event {
   });
 
   factory Event.fromJson(Map<String, dynamic> json) => Event(
-        id: json['id'] as int,
-        title: json['title'] as String,
-        description: json['description'] as String?,
-        location: json['location'] as String?,
-        eventDate: json['eventDate'] as String,
-        eventTime: json['eventTime'] as String?,
-      );
+    id: json['id'] as int,
+    title: json['title'] as String,
+    description: json['description'] as String?,
+    location: json['location'] as String?,
+    eventDate: json['eventDate'] as String,
+    eventTime: json['eventTime'] as String?,
+  );
 }

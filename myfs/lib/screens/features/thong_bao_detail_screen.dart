@@ -10,12 +10,12 @@ class ThongBaoDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scopeColor = notification.isSchoolWide ? AppColors.info : AppColors.success;
-    
+    final scopeColor = notification.isSchoolWide
+        ? AppColors.info
+        : AppColors.success;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Chi tiết Thông báo'),
-      ),
+      appBar: AppBar(title: const Text('Chi tiết Thông báo')),
       backgroundColor: Colors.grey.shade50,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -34,7 +34,7 @@ class ThongBaoDetailScreen extends StatelessWidget {
                     color: Colors.black.withValues(alpha: 0.02),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
-                  )
+                  ),
                 ],
               ),
               child: Column(
@@ -43,7 +43,11 @@ class ThongBaoDetailScreen extends StatelessWidget {
                   Text(
                     notification.title,
                     style: const TextStyle(
-                        fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.ink, height: 1.3),
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.ink,
+                      height: 1.3,
+                    ),
                   ),
                   const SizedBox(height: 16),
                   Wrap(
@@ -51,7 +55,10 @@ class ThongBaoDetailScreen extends StatelessWidget {
                     runSpacing: 8,
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           color: scopeColor.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(8),
@@ -59,11 +66,23 @@ class ThongBaoDetailScreen extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(notification.isSchoolWide ? Icons.campaign_outlined : Icons.class_outlined, size: 16, color: scopeColor),
+                            Icon(
+                              notification.isSchoolWide
+                                  ? Icons.campaign_outlined
+                                  : Icons.class_outlined,
+                              size: 16,
+                              color: scopeColor,
+                            ),
                             const SizedBox(width: 6),
                             Text(
-                              notification.isSchoolWide ? 'Toàn trường' : 'Lớp ${notification.className ?? ''}',
-                              style: TextStyle(color: scopeColor, fontWeight: FontWeight.bold, fontSize: 13),
+                              notification.isSchoolWide
+                                  ? 'Toàn trường'
+                                  : 'Lớp ${notification.className ?? ''}',
+                              style: TextStyle(
+                                color: scopeColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
                             ),
                           ],
                         ),
@@ -74,13 +93,21 @@ class ThongBaoDetailScreen extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Divider(height: 1, color: AppColors.border),
                   ),
-                  _buildInfoRow(Icons.person_outline, 'Người gửi', notification.senderName ?? 'Hệ thống'),
+                  _buildInfoRow(
+                    Icons.person_outline,
+                    'Người gửi',
+                    notification.senderName ?? 'Hệ thống',
+                  ),
                   const SizedBox(height: 14),
-                  _buildInfoRow(Icons.access_time, 'Thời gian', notification.createdAtLabel),
+                  _buildInfoRow(
+                    Icons.access_time,
+                    'Thời gian',
+                    notification.createdAtLabel,
+                  ),
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 20),
 
             // Ô LỚN SỐ 2: Nội dung
@@ -95,22 +122,33 @@ class ThongBaoDetailScreen extends StatelessWidget {
                     color: Colors.black.withValues(alpha: 0.02),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
-                  )
+                  ),
                 ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Nội dung', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primaryDark)),
+                  const Text(
+                    'Nội dung',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryDark,
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   Text(
                     notification.content,
-                    style: const TextStyle(fontSize: 15, height: 1.6, color: Colors.black87),
+                    style: const TextStyle(
+                      fontSize: 15,
+                      height: 1.6,
+                      color: Colors.black87,
+                    ),
                   ),
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 40),
           ],
         ),
@@ -129,9 +167,19 @@ class ThongBaoDetailScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
             children: [
-              Text('$title: ', style: const TextStyle(fontSize: 14, color: Colors.grey)),
+              Text(
+                '$title: ',
+                style: const TextStyle(fontSize: 14, color: Colors.grey),
+              ),
               Expanded(
-                child: Text(value, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: AppColors.ink)),
+                child: Text(
+                  value,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.ink,
+                  ),
+                ),
               ),
             ],
           ),

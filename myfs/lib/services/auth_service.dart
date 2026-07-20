@@ -13,12 +13,16 @@ class AuthService {
   /// Thành công: nạp Session (user, currentStudent, children) và trả về AppUser.
   /// Thất bại: ném ApiException (401 nếu sai thông tin).
   static Future<AppUser> login(String phone, String password) async {
-    final data = await ApiClient.post('/api/auth/login', {
-      'phone': phone,
-      'password': password,
-    }) as Map<String, dynamic>;
+    final data =
+        await ApiClient.post('/api/auth/login', {
+              'phone': phone,
+              'password': password,
+            })
+            as Map<String, dynamic>;
 
-    final userMap = Map<String, dynamic>.from(data['user'] as Map<String, dynamic>);
+    final userMap = Map<String, dynamic>.from(
+      data['user'] as Map<String, dynamic>,
+    );
     userMap['roles'] = data['roles'];
 
     final user = AppUser.fromJson(userMap);
@@ -29,8 +33,9 @@ class AuthService {
 
     // Học sinh chính để hiển thị dữ liệu (chia sẻ qua Session cho mọi màn)
     if (data['student'] != null) {
-      session.currentStudent =
-          Student.fromJson(data['student'] as Map<String, dynamic>);
+      session.currentStudent = Student.fromJson(
+        data['student'] as Map<String, dynamic>,
+      );
     }
     // Danh sách con (nếu là phụ huynh)
     if (data['children'] != null) {
@@ -49,18 +54,20 @@ class AuthService {
 
   /// Yêu cầu gửi OTP
   static Future<String> requestOtp(String phone) async {
-    final data = await ApiClient.post('/api/auth/forgot-password', {
-      'phone': phone,
-    }) as Map<String, dynamic>;
+    final data =
+        await ApiClient.post('/api/auth/forgot-password', {'phone': phone})
+            as Map<String, dynamic>;
     return (data['message'] ?? 'Đã gửi mã OTP.').toString();
   }
 
   /// Cập nhật mật khẩu mới
   static Future<String> updatePassword(String phone, String newPassword) async {
-    final data = await ApiClient.post('/api/auth/update-password', {
-      'phone': phone,
-      'newPassword': newPassword,
-    }) as Map<String, dynamic>;
+    final data =
+        await ApiClient.post('/api/auth/update-password', {
+              'phone': phone,
+              'newPassword': newPassword,
+            })
+            as Map<String, dynamic>;
     return (data['message'] ?? 'Đổi mật khẩu thành công.').toString();
   }
 

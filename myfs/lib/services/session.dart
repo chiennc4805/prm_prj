@@ -33,7 +33,7 @@ class Session {
   bool get isLoggedIn => user != null;
 
   bool get isTeacher => currentRole == 'TEACHER';
-  bool get isParent  => currentRole == 'PARENT';
+  bool get isParent => currentRole == 'PARENT';
   bool get isStudent => currentRole == 'STUDENT';
 
   /// Lớp chủ nhiệm của giáo viên (lớp đầu tiên nếu chủ nhiệm nhiều lớp).

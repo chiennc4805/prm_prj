@@ -10,8 +10,43 @@ import '../models/leave_request.dart';
 class LoadingView extends StatelessWidget {
   const LoadingView({super.key});
   @override
-  Widget build(BuildContext context) =>
-      const Center(child: CircularProgressIndicator(color: AppColors.primary));
+  Widget build(BuildContext context) => Center(
+    child: Container(
+      padding: const EdgeInsets.all(22),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.ink.withValues(alpha: .06),
+            blurRadius: 24,
+          ),
+        ],
+      ),
+      child: const Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(
+            width: 28,
+            height: 28,
+            child: CircularProgressIndicator(
+              color: AppColors.primary,
+              strokeWidth: 3,
+            ),
+          ),
+          SizedBox(height: 12),
+          Text(
+            'Đang tải dữ liệu...',
+            style: TextStyle(
+              fontSize: 12,
+              color: AppColors.inkLight,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 /// Trạng thái lỗi kèm nút "Thử lại".
@@ -28,14 +63,30 @@ class ErrorView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.wifi_off_rounded, size: 60, color: Colors.grey),
+            Container(
+              width: 72,
+              height: 72,
+              decoration: BoxDecoration(
+                color: AppColors.danger.withValues(alpha: .09),
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: const Icon(
+                Icons.cloud_off_rounded,
+                size: 34,
+                color: AppColors.danger,
+              ),
+            ),
             const SizedBox(height: 14),
-            const Text('Không thể kết nối máy chủ',
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+            const Text(
+              'Không thể kết nối máy chủ',
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 8),
-            Text(message,
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.grey, fontSize: 13)),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Colors.grey, fontSize: 13),
+            ),
             const SizedBox(height: 18),
             FilledButton.icon(
               onPressed: onRetry,
@@ -55,8 +106,12 @@ class EmptyView extends StatelessWidget {
   final IconData icon;
   final String message;
   final Widget? action;
-  const EmptyView(
-      {super.key, required this.icon, required this.message, this.action});
+  const EmptyView({
+    super.key,
+    required this.icon,
+    required this.message,
+    this.action,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -64,11 +119,21 @@ class EmptyView extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 66, color: Colors.grey.shade400),
+          Container(
+            width: 84,
+            height: 84,
+            decoration: BoxDecoration(
+              color: AppColors.surfaceSoft,
+              borderRadius: BorderRadius.circular(28),
+            ),
+            child: Icon(icon, size: 38, color: AppColors.inkLight),
+          ),
           const SizedBox(height: 14),
-          Text(message,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16, color: Colors.grey.shade600)),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, color: Colors.grey.shade600),
+          ),
           if (action != null) ...[const SizedBox(height: 14), action!],
         ],
       ),
@@ -83,18 +148,26 @@ class LeaveStatusChip extends StatelessWidget {
 
   Color get _color {
     switch (status) {
-      case 'APPROVED': return AppColors.success;
-      case 'REJECTED': return AppColors.danger;
-      case 'PENDING_PARENT': return Colors.blueGrey;
-      case 'PENDING_TEACHER': return AppColors.warning;
-      case 'PENDING_SCHOOL': return Colors.teal;
-      case 'PENDING':  return AppColors.warning;
-      default:         return Colors.grey;
+      case 'APPROVED':
+        return AppColors.success;
+      case 'REJECTED':
+        return AppColors.danger;
+      case 'PENDING_PARENT':
+        return Colors.blueGrey;
+      case 'PENDING_TEACHER':
+        return AppColors.warning;
+      case 'PENDING_SCHOOL':
+        return Colors.teal;
+      case 'PENDING':
+        return AppColors.warning;
+      default:
+        return Colors.grey;
     }
   }
 
   @override
-  Widget build(BuildContext context) => _Pill(LeaveRequest.label(status), _color);
+  Widget build(BuildContext context) =>
+      _Pill(LeaveRequest.label(status), _color);
 }
 
 class _Pill extends StatelessWidget {
@@ -111,9 +184,14 @@ class _Pill extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(color: color.withValues(alpha: 0.5)),
       ),
-      child: Text(text,
-          style: TextStyle(
-              color: color, fontWeight: FontWeight.w700, fontSize: 12)),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: color,
+          fontWeight: FontWeight.w700,
+          fontSize: 12,
+        ),
+      ),
     );
   }
 }
@@ -129,7 +207,8 @@ class AppDialogs {
     Color? confirmColor,
     bool isDanger = false,
   }) async {
-    final themeColor = confirmColor ?? (isDanger ? AppColors.danger : AppColors.primary);
+    final themeColor =
+        confirmColor ?? (isDanger ? AppColors.danger : AppColors.primary);
     final result = await showDialog<bool>(
       context: context,
       builder: (ctx) => Dialog(
@@ -151,7 +230,11 @@ class AppDialogs {
               const SizedBox(height: 14),
               Text(
                 content,
-                style: const TextStyle(fontSize: 15, color: Colors.black87, height: 1.4),
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.black87,
+                  height: 1.4,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 28),
@@ -170,7 +253,10 @@ class AppDialogs {
                       ),
                       child: Text(
                         cancelText,
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
@@ -187,7 +273,10 @@ class AppDialogs {
                       ),
                       child: Text(
                         confirmText,
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),

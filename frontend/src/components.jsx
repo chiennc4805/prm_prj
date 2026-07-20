@@ -1,20 +1,226 @@
-import {useEffect,useState} from 'react';
-import {NavLink,useLocation} from 'react-router-dom';
-import {BookOpen,CalendarDays,ChevronRight,ClipboardCheck,GraduationCap,LayoutDashboard,LogOut,Megaphone,Menu,School,Users,X} from 'lucide-react';
-import {useAuth} from './auth';
+import { useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import {
+  BookOpen,
+  CalendarDays,
+  ChevronRight,
+  ClipboardCheck,
+  GraduationCap,
+  LayoutDashboard,
+  LogOut,
+  Megaphone,
+  Menu,
+  School,
+  Users,
+  X,
+} from 'lucide-react';
+import { useAuth } from './auth';
 
-const adminNav=[['/admin','Tổng quan',LayoutDashboard],['/admin/teachers','Giáo viên',Users],['/admin/students','Học sinh',GraduationCap],['/admin/parents','Phụ huynh',Users],['/admin/classes','Lớp học',School],['/admin/subjects','Môn học',BookOpen],['/admin/assignments','Phân công',ClipboardCheck],['/admin/schedules','Thời khóa biểu',CalendarDays]];
-const teacherNav=[['/teacher','Tổng quan',LayoutDashboard],['/teacher/classes','Lớp giảng dạy',Users],['/teacher/schedule','Lịch dạy',CalendarDays],['/teacher/grades','Quản lý điểm',GraduationCap],['/teacher/attendance','Điểm danh',ClipboardCheck],['/teacher/notifications','Thông báo',Megaphone],['/teacher/homeroom','Chủ nhiệm',School]];
-export function Layout({children}){const {user,logout}=useAuth();const [open,setOpen]=useState(false);const location=useLocation();useEffect(()=>setOpen(false),[location]);const nav=user?.role==='ADMIN'?adminNav:teacherNav;return <div className="app-shell"><aside className={`sidebar ${open?'open':''}`}><div className="brand"><div className="brand-mark">F</div><div><strong>My F-School</strong><small>School Management</small></div><button className="mobile-close" onClick={()=>setOpen(false)}><X/></button></div><nav>{nav.map(([to,label,Icon])=><NavLink key={to} to={to} end={to==='/admin'||to==='/teacher'}><Icon size={19}/><span>{label}</span><ChevronRight className="chevron" size={15}/></NavLink>)}</nav><div className="sidebar-user"><div className="avatar">{user?.fullName?.charAt(0)}</div><div><strong>{user?.fullName}</strong><small>{user?.role==='ADMIN'?'Quản trị viên':'Giáo viên'}</small></div><button onClick={logout} title="Đăng xuất"><LogOut size={18}/></button></div></aside><main><header className="topbar"><button className="menu-btn" onClick={()=>setOpen(true)}><Menu/></button><div><span>Hệ thống quản lý trường học</span><strong>Xin chào, {user?.fullName}</strong></div><div className="status-dot">● Hệ thống hoạt động</div></header><div className="content">{children}</div></main>{open&&<div className="overlay" onClick={()=>setOpen(false)}/>}</div>}
-export function Page({title,subtitle,action,children}){return <><div className="page-head"><div><h1>{title}</h1>{subtitle&&<p>{subtitle}</p>}</div>{action}</div>{children}</>}
-export function Card({children,className=''}){return <section className={`card ${className}`}>{children}</section>}
-export function Stat({label,value,icon:Icon,tone='blue',hint}){return <Card className="stat"><div className={`stat-icon ${tone}`}><Icon/></div><div><span>{label}</span><strong>{value}</strong>{hint&&<small>{hint}</small>}</div></Card>}
-export function Button({children,variant='',...props}){return <button className={`btn ${variant}`} {...props}>{children}</button>}
-export function Empty({text='Chưa có dữ liệu'}){return <div className="empty"><School/><p>{text}</p></div>}
-export function Loading(){return <div className="loading"><i/><span>Đang tải dữ liệu...</span></div>}
-export function ErrorBox({error,onRetry}){return <div className="error-box"><strong>Không thể tải dữ liệu</strong><span>{error?.message}</span>{onRetry&&<Button onClick={onRetry}>Thử lại</Button>}</div>}
-export function Table({columns,rows,empty='Chưa có dữ liệu'}){if(!rows?.length)return <Empty text={empty}/>;return <div className="table-wrap"><table><thead><tr>{columns.map(c=><th key={c.key}>{c.label}</th>)}</tr></thead><tbody>{rows.map((row,i)=><tr key={row.id??i}>{columns.map(c=><td key={c.key}>{c.render?c.render(row):row[c.key]??'—'}</td>)}</tr>)}</tbody></table></div>}
-export function Modal({title,onClose,children}){return <div className="modal-backdrop" onMouseDown={e=>e.target===e.currentTarget&&onClose()}><div className="modal"><div className="modal-head"><h2>{title}</h2><button onClick={onClose}><X/></button></div>{children}</div></div>}
-export function Field({label,children}){return <label className="field"><span>{label}</span>{children}</label>}
-export function Badge({children,tone='neutral'}){return <span className={`badge ${tone}`}>{children}</span>}
-export function useLoad(loader,deps=[]){const [state,setState]=useState({loading:true,data:null,error:null});const [version,setVersion]=useState(0);useEffect(()=>{let active=true;setState(s=>({...s,loading:true,error:null}));Promise.resolve().then(loader).then(data=>{if(active)setState({loading:false,data,error:null})}).catch(error=>{if(active)setState({loading:false,data:null,error})});return()=>{active=false}},[...deps,version]);return {...state,reload:()=>setVersion(v=>v+1)}}
+const adminNav = [
+  ['/admin', 'Tổng quan', LayoutDashboard],
+  ['/admin/teachers', 'Giáo viên', Users],
+  ['/admin/students', 'Học sinh', GraduationCap],
+  ['/admin/parents', 'Phụ huynh', Users],
+  ['/admin/classes', 'Lớp học', School],
+  ['/admin/subjects', 'Môn học', BookOpen],
+  ['/admin/assignments', 'Phân công', ClipboardCheck],
+  ['/admin/schedules', 'Thời khóa biểu', CalendarDays],
+];
+const teacherNav = [
+  ['/teacher', 'Tổng quan', LayoutDashboard],
+  ['/teacher/classes', 'Lớp giảng dạy', Users],
+  ['/teacher/schedule', 'Lịch dạy', CalendarDays],
+  ['/teacher/grades', 'Quản lý điểm', GraduationCap],
+  ['/teacher/notifications', 'Thông báo', Megaphone],
+  ['/teacher/homeroom', 'Chủ nhiệm', School],
+];
+export function Layout({ children }) {
+  const { user, logout } = useAuth();
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
+  useEffect(() => setOpen(false), [location]);
+  const nav = user?.role === 'ADMIN' ? adminNav : teacherNav;
+  return (
+    <div className="app-shell">
+      <aside className={`sidebar ${open ? 'open' : ''}`}>
+        <div className="brand">
+          <div className="brand-mark">F</div>
+          <div>
+            <strong>FPT Schools</strong>
+            <small>School Management</small>
+          </div>
+          <button className="mobile-close" onClick={() => setOpen(false)}>
+            <X />
+          </button>
+        </div>
+        <nav>
+          {nav.map(([to, label, Icon]) => (
+            <NavLink key={to} to={to} end={to === '/admin' || to === '/teacher'}>
+              <Icon size={19} />
+              <span>{label}</span>
+              <ChevronRight className="chevron" size={15} />
+            </NavLink>
+          ))}
+        </nav>
+        <div className="sidebar-user">
+          <div className="avatar">{user?.fullName?.charAt(0)}</div>
+          <div>
+            <strong>{user?.fullName}</strong>
+            <small>{user?.role === 'ADMIN' ? 'Quản trị viên' : 'Giáo viên'}</small>
+          </div>
+          <button onClick={logout} title="Đăng xuất">
+            <LogOut size={18} />
+          </button>
+        </div>
+      </aside>
+      <main>
+        <header className="topbar">
+          <button className="menu-btn" onClick={() => setOpen(true)}>
+            <Menu />
+          </button>
+          <div>
+            <span>Hệ thống quản lý trường học</span>
+            <strong>Xin chào, {user?.fullName}</strong>
+          </div>
+          <div className="status-dot">● Hệ thống hoạt động</div>
+        </header>
+        <div className="content">{children}</div>
+      </main>
+      {open && <div className="overlay" onClick={() => setOpen(false)} />}
+    </div>
+  );
+}
+export function Page({ title, subtitle, action, children }) {
+  return (
+    <>
+      <div className="page-head">
+        <div>
+          <h1>{title}</h1>
+          {subtitle && <p>{subtitle}</p>}
+        </div>
+        {action}
+      </div>
+      {children}
+    </>
+  );
+}
+export function Card({ children, className = '' }) {
+  return <section className={`card ${className}`}>{children}</section>;
+}
+export function Stat({ label, value, icon: Icon, tone = 'blue', hint }) {
+  return (
+    <Card className="stat">
+      <div className={`stat-icon ${tone}`}>
+        <Icon />
+      </div>
+      <div>
+        <span>{label}</span>
+        <strong>{value}</strong>
+        {hint && <small>{hint}</small>}
+      </div>
+    </Card>
+  );
+}
+export function Button({ children, variant = '', ...props }) {
+  return (
+    <button className={`btn ${variant}`} {...props}>
+      {children}
+    </button>
+  );
+}
+export function Empty({ text = 'Chưa có dữ liệu' }) {
+  return (
+    <div className="empty">
+      <School />
+      <p>{text}</p>
+    </div>
+  );
+}
+export function Loading() {
+  return (
+    <div className="loading">
+      <i />
+      <span>Đang tải dữ liệu...</span>
+    </div>
+  );
+}
+export function ErrorBox({ error, onRetry }) {
+  return (
+    <div className="error-box">
+      <strong>Không thể tải dữ liệu</strong>
+      <span>{error?.message}</span>
+      {onRetry && <Button onClick={onRetry}>Thử lại</Button>}
+    </div>
+  );
+}
+export function Table({ columns, rows, empty = 'Chưa có dữ liệu' }) {
+  if (!rows?.length) return <Empty text={empty} />;
+  return (
+    <div className="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            {columns.map((c) => (
+              <th key={c.key}>{c.label}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, i) => (
+            <tr key={row.id ?? i}>
+              {columns.map((c) => (
+                <td key={c.key}>{c.render ? c.render(row) : (row[c.key] ?? '—')}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+export function Modal({ title, onClose, children }) {
+  return (
+    <div className="modal-backdrop" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+      <div className="modal">
+        <div className="modal-head">
+          <h2>{title}</h2>
+          <button onClick={onClose}>
+            <X />
+          </button>
+        </div>
+        {children}
+      </div>
+    </div>
+  );
+}
+export function Field({ label, children }) {
+  return (
+    <label className="field">
+      <span>{label}</span>
+      {children}
+    </label>
+  );
+}
+export function Badge({ children, tone = 'neutral' }) {
+  return <span className={`badge ${tone}`}>{children}</span>;
+}
+export function useLoad(loader, deps = []) {
+  const [state, setState] = useState({ loading: true, data: null, error: null });
+  const [version, setVersion] = useState(0);
+  useEffect(() => {
+    let active = true;
+    setState((s) => ({ ...s, loading: true, error: null }));
+    Promise.resolve()
+      .then(loader)
+      .then((data) => {
+        if (active) setState({ loading: false, data, error: null });
+      })
+      .catch((error) => {
+        if (active) setState({ loading: false, data: null, error });
+      });
+    return () => {
+      active = false;
+    };
+  }, [...deps, version]);
+  return { ...state, reload: () => setVersion((v) => v + 1) };
+}

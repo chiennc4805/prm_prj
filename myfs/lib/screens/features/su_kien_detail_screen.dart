@@ -14,7 +14,8 @@ class SuKienDetailScreen extends StatelessWidget {
       builder: (ctx) => AlertDialog(
         title: const Text('Thông báo'),
         content: const Text(
-            'Tính năng đăng ký tham gia sự kiện đang được phát triển.\n\nVui lòng theo dõi thêm thông báo từ nhà trường!'),
+          'Tính năng đăng ký tham gia sự kiện đang được phát triển.\n\nVui lòng theo dõi thêm thông báo từ nhà trường!',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
@@ -28,9 +29,7 @@ class SuKienDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Chi tiết Sự kiện'),
-      ),
+      appBar: AppBar(title: const Text('Chi tiết Sự kiện')),
       backgroundColor: Colors.grey.shade50,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -49,7 +48,7 @@ class SuKienDetailScreen extends StatelessWidget {
                     color: Colors.black.withValues(alpha: 0.02),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
-                  )
+                  ),
                 ],
               ),
               child: Column(
@@ -58,21 +57,37 @@ class SuKienDetailScreen extends StatelessWidget {
                   Text(
                     event.title,
                     style: const TextStyle(
-                        fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.ink, height: 1.3),
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.ink,
+                      height: 1.3,
+                    ),
                   ),
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Divider(height: 1, color: AppColors.border),
                   ),
-                  _buildInfoRow(Icons.calendar_month, 'Ngày tổ chức', event.eventDate),
+                  _buildInfoRow(
+                    Icons.calendar_month,
+                    'Ngày tổ chức',
+                    event.eventDate,
+                  ),
                   const SizedBox(height: 14),
-                  _buildInfoRow(Icons.schedule, 'Thời gian bắt đầu', event.eventTime ?? 'Chưa xác định'),
+                  _buildInfoRow(
+                    Icons.schedule,
+                    'Thời gian bắt đầu',
+                    event.eventTime ?? 'Chưa xác định',
+                  ),
                   const SizedBox(height: 14),
-                  _buildInfoRow(Icons.location_on_outlined, 'Địa điểm', event.location ?? 'Đang cập nhật'),
+                  _buildInfoRow(
+                    Icons.location_on_outlined,
+                    'Địa điểm',
+                    event.location ?? 'Đang cập nhật',
+                  ),
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 20),
 
             // Ô LỚN SỐ 2: Nội dung chi tiết (description)
@@ -87,22 +102,34 @@ class SuKienDetailScreen extends StatelessWidget {
                     color: Colors.black.withValues(alpha: 0.02),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
-                  )
+                  ),
                 ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Nội dung chi tiết', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: AppColors.primaryDark)),
+                  const Text(
+                    'Nội dung chi tiết',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primaryDark,
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   Text(
-                    event.description ?? 'Chưa có thông tin mô tả chi tiết cho sự kiện này.',
-                    style: const TextStyle(fontSize: 15, height: 1.6, color: Colors.black87),
+                    event.description ??
+                        'Chưa có thông tin mô tả chi tiết cho sự kiện này.',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      height: 1.6,
+                      color: Colors.black87,
+                    ),
                   ),
                 ],
               ),
             ),
-            
+
             const SizedBox(height: 40),
           ],
         ),
@@ -114,9 +141,14 @@ class SuKienDetailScreen extends StatelessWidget {
             onPressed: () => _onJoinPressed(context),
             style: FilledButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
             ),
-            child: const Text('ĐĂNG KÝ THAM GIA', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            child: const Text(
+              'ĐĂNG KÝ THAM GIA',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
           ),
         ),
       ),
@@ -133,9 +165,19 @@ class SuKienDetailScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: const TextStyle(fontSize: 13, color: Colors.grey)),
+              Text(
+                title,
+                style: const TextStyle(fontSize: 13, color: Colors.grey),
+              ),
               const SizedBox(height: 4),
-              Text(value, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500, color: AppColors.ink)),
+              Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.ink,
+                ),
+              ),
             ],
           ),
         ),

@@ -34,10 +34,14 @@ class _ClbScreenState extends State<ClbScreen> {
 
   Color _catColor(String? cat) {
     switch (cat) {
-      case 'Học thuật':  return AppColors.info;
-      case 'Thể thao':   return AppColors.success;
-      case 'Nghệ thuật': return const Color(0xFF7C3AED);
-      default:           return AppColors.primary;
+      case 'Học thuật':
+        return AppColors.info;
+      case 'Thể thao':
+        return AppColors.success;
+      case 'Nghệ thuật':
+        return const Color(0xFF7C3AED);
+      default:
+        return AppColors.primary;
     }
   }
 
@@ -57,7 +61,9 @@ class _ClbScreenState extends State<ClbScreen> {
           final list = snap.data ?? [];
           if (list.isEmpty) {
             return const EmptyView(
-                icon: Icons.groups_outlined, message: 'Chưa có câu lạc bộ nào.');
+              icon: Icons.groups_outlined,
+              message: 'Chưa có câu lạc bộ nào.',
+            );
           }
           return RefreshIndicator(
             onRefresh: () async => _reload(),
@@ -84,9 +90,7 @@ class _ClbScreenState extends State<ClbScreen> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
-              builder: (context) => ClbDetailScreen(club: c),
-            ),
+            MaterialPageRoute(builder: (context) => ClbDetailScreen(club: c)),
           );
         },
         child: Padding(
@@ -97,20 +101,33 @@ class _ClbScreenState extends State<ClbScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: Text(c.name,
-                        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                    child: Text(
+                      c.name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 8),
                   if (c.category != null)
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: color.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Text(c.category!,
-                          style: TextStyle(
-                              color: color, fontSize: 12, fontWeight: FontWeight.w700)),
+                      child: Text(
+                        c.category!,
+                        style: TextStyle(
+                          color: color,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ),
                 ],
               ),
@@ -128,10 +145,20 @@ class _ClbScreenState extends State<ClbScreen> {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.people_alt, size: 16, color: Colors.grey),
+                      const Icon(
+                        Icons.people_alt,
+                        size: 16,
+                        color: Colors.grey,
+                      ),
                       const SizedBox(width: 4),
-                      Text('${c.memberCount} thành viên',
-                          style: const TextStyle(fontSize: 13, color: Colors.grey, fontWeight: FontWeight.w500)),
+                      Text(
+                        '${c.memberCount} thành viên',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
                     ],
                   ),
                   const Icon(Icons.chevron_right, color: Colors.grey, size: 20),

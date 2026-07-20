@@ -48,7 +48,9 @@ class _SuKienScreenState extends State<SuKienScreen> {
           final list = snap.data ?? [];
           if (list.isEmpty) {
             return const EmptyView(
-                icon: Icons.event_busy_outlined, message: 'Chưa có sự kiện nào.');
+              icon: Icons.event_busy_outlined,
+              message: 'Chưa có sự kiện nào.',
+            );
           }
           return RefreshIndicator(
             onRefresh: () async => _reload(),
@@ -91,7 +93,11 @@ class _SuKienScreenState extends State<SuKienScreen> {
                   color: AppColors.primary.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.event, color: AppColors.primary, size: 28),
+                child: const Icon(
+                  Icons.event,
+                  color: AppColors.primary,
+                  size: 28,
+                ),
               ),
               const SizedBox(width: 16),
               // Thông tin bên phải
@@ -101,14 +107,22 @@ class _SuKienScreenState extends State<SuKienScreen> {
                   children: [
                     Text(
                       e.title,
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.ink),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: AppColors.ink,
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 6),
                     Text(
                       '${e.eventDate}${e.eventTime != null ? ' • ${e.eventTime}' : ''}',
-                      style: const TextStyle(fontSize: 13.5, color: Colors.grey, fontWeight: FontWeight.w500),
+                      style: const TextStyle(
+                        fontSize: 13.5,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
                 ),

@@ -1,5 +1,100 @@
-import {useState} from 'react';
-import {ArrowRight,BookOpen,LockKeyhole,Phone,ShieldCheck} from 'lucide-react';
-import {useAuth} from '../auth';
+import { useState } from 'react';
+import { ArrowRight, BookOpen, LockKeyhole, Phone, ShieldCheck } from 'lucide-react';
+import { useAuth } from '../auth';
 
-export default function Login(){const {login}=useAuth();const [form,setForm]=useState({phone:'0900000001',password:'123456'});const [error,setError]=useState('');const [busy,setBusy]=useState(false);const submit=async e=>{e.preventDefault();setBusy(true);setError('');try{await login(form.phone,form.password)}catch(e){setError(e.message)}finally{setBusy(false)}};return <div className="login-page"><div className="login-visual"><div className="login-copy"><div className="login-logo"><BookOpen/> My F-School</div><span className="eyebrow">NỀN TẢNG QUẢN LÝ GIÁO DỤC</span><h1>Quản lý trường học<br/><em>gọn gàng hơn.</em></h1><p>Một không gian làm việc thống nhất dành cho quản trị viên và giáo viên.</p><div className="login-feature"><ShieldCheck/><div><strong>Đúng người, đúng công việc</strong><small>Giao diện tự động điều hướng theo vai trò tài khoản.</small></div></div></div><div className="login-orb one"/><div className="login-orb two"/></div><div className="login-panel"><form onSubmit={submit}><div className="mobile-logo"><BookOpen/> My F-School</div><span className="eyebrow">CHÀO MỪNG TRỞ LẠI</span><h2>Đăng nhập hệ thống</h2><p>Sử dụng tài khoản Admin hoặc Giáo viên.</p><label><span>Số điện thoại</span><div className="input-icon"><Phone/><input value={form.phone} onChange={e=>setForm({...form,phone:e.target.value})} placeholder="Nhập số điện thoại" required/></div></label><label><span>Mật khẩu</span><div className="input-icon"><LockKeyhole/><input type="password" value={form.password} onChange={e=>setForm({...form,password:e.target.value})} placeholder="Nhập mật khẩu" required/></div></label>{error&&<div className="login-error">{error}</div>}<button className="login-button" disabled={busy}>{busy?'Đang kiểm tra...':<>Đăng nhập <ArrowRight/></>}</button><div className="demo-box"><strong>Tài khoản demo</strong><span>Admin: 0900000001 · Giáo viên: 0900000002</span><span>Mật khẩu: 123456</span></div></form></div></div>}
+export default function Login() {
+  const { login } = useAuth();
+  const [form, setForm] = useState({ phone: '0900000001', password: '123456' });
+  const [error, setError] = useState('');
+  const [busy, setBusy] = useState(false);
+  const submit = async (e) => {
+    e.preventDefault();
+    setBusy(true);
+    setError('');
+    try {
+      await login(form.phone, form.password);
+    } catch (e) {
+      setError(e.message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="login-page">
+      <div className="login-visual">
+        <div className="login-copy">
+          <div className="login-logo">
+            <BookOpen /> FPT Schools
+          </div>
+          <span className="eyebrow">NỀN TẢNG QUẢN LÝ GIÁO DỤC</span>
+          <h1>
+            Quản lý trường học
+            <br />
+            <em>gọn gàng hơn.</em>
+          </h1>
+          <p>Một không gian làm việc thống nhất dành cho quản trị viên và giáo viên.</p>
+          <div className="login-feature">
+            <ShieldCheck />
+            <div>
+              <strong>Đúng người, đúng công việc</strong>
+              <small>Giao diện tự động điều hướng theo vai trò tài khoản.</small>
+            </div>
+          </div>
+        </div>
+        <div className="login-orb one" />
+        <div className="login-orb two" />
+      </div>
+      <div className="login-panel">
+        <form onSubmit={submit}>
+          <div className="mobile-logo">
+            <BookOpen /> FPT Schools
+          </div>
+          <span className="eyebrow">CHÀO MỪNG TRỞ LẠI</span>
+          <h2>Đăng nhập hệ thống</h2>
+          <p>Sử dụng tài khoản Admin hoặc Giáo viên.</p>
+          <label>
+            <span>Số điện thoại</span>
+            <div className="input-icon">
+              <Phone />
+              <input
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                placeholder="Nhập số điện thoại"
+                required
+              />
+            </div>
+          </label>
+          <label>
+            <span>Mật khẩu</span>
+            <div className="input-icon">
+              <LockKeyhole />
+              <input
+                type="password"
+                value={form.password}
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                placeholder="Nhập mật khẩu"
+                required
+              />
+            </div>
+          </label>
+          {error && <div className="login-error">{error}</div>}
+          <button className="login-button" disabled={busy}>
+            {busy ? (
+              'Đang kiểm tra...'
+            ) : (
+              <>
+                Đăng nhập <ArrowRight />
+              </>
+            )}
+          </button>
+          <div className="demo-box">
+            <strong>Tài khoản demo</strong>
+            <span>Admin: 0900000001 · Giáo viên: 0900000002</span>
+            <span>Mật khẩu: 123456</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+}

@@ -28,7 +28,9 @@ class AppUser {
       phone: json['phone'] as String,
       fullName: json['fullName'] as String,
       role: json['role'] as String,
-      roles: rolesList != null ? rolesList.map((e) => e.toString()).toList() : [],
+      roles: rolesList != null
+          ? rolesList.map((e) => e.toString()).toList()
+          : [],
       email: json['email'] as String?,
       avatarUrl: json['avatarUrl'] as String?,
     );

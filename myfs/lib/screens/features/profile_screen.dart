@@ -32,9 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Hồ sơ cá nhân'),
-      ),
+      appBar: AppBar(title: const Text('Hồ sơ cá nhân')),
       body: ListView(
         padding: const EdgeInsets.all(24),
         children: [
@@ -103,11 +101,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: FilledButton.icon(
               onPressed: _switchRole,
               icon: const Icon(Icons.autorenew, size: 20),
-              label: Text(session.isTeacher ? 'Đổi sang Phụ huynh' : 'Đổi sang Giáo viên'),
+              label: Text(
+                session.isTeacher ? 'Đổi sang Phụ huynh' : 'Đổi sang Giáo viên',
+              ),
               style: FilledButton.styleFrom(
                 backgroundColor: AppColors.primaryDark,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
               ),
             ),
           ),
@@ -121,7 +126,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Đã chuyển sang góc nhìn ${session.isTeacher ? 'Giáo viên' : 'Phụ huynh'}'),
+        content: Text(
+          'Đã chuyển sang góc nhìn ${session.isTeacher ? 'Giáo viên' : 'Phụ huynh'}',
+        ),
         backgroundColor: AppColors.success,
       ),
     );
@@ -135,23 +142,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     // 1. Nếu là phụ huynh, hiển thị tên con đang theo dõi đầu tiên
     if (session.isParent && student != null) {
-      tiles.add(_buildInfoTile(Icons.person_outline, 'Học sinh đang theo dõi', student.fullName));
+      tiles.add(
+        _buildInfoTile(
+          Icons.person_outline,
+          'Học sinh đang theo dõi',
+          student.fullName,
+        ),
+      );
       tiles.add(const Divider(height: 1, color: AppColors.border, indent: 70));
     }
 
     // 2. Mã học sinh (Không áp dụng cho giáo viên)
     if (!session.isTeacher && student != null) {
-      tiles.add(_buildInfoTile(Icons.badge_outlined, 'Mã học sinh', student.studentCode));
+      tiles.add(
+        _buildInfoTile(
+          Icons.badge_outlined,
+          'Mã học sinh',
+          student.studentCode,
+        ),
+      );
       tiles.add(const Divider(height: 1, color: AppColors.border, indent: 70));
     }
 
     // 3. Lớp
     if (session.isTeacher) {
       final c = session.homeroomClass;
-      final classStr = c != null ? '${c.name} (NH ${c.academicYear})' : 'Chưa phân công';
-      tiles.add(_buildInfoTile(Icons.meeting_room_outlined, 'Chủ nhiệm lớp', classStr));
+      final classStr = c != null
+          ? '${c.name} (NH ${c.academicYear})'
+          : 'Chưa phân công';
+      tiles.add(
+        _buildInfoTile(Icons.meeting_room_outlined, 'Chủ nhiệm lớp', classStr),
+      );
     } else if (student != null) {
-      tiles.add(_buildInfoTile(Icons.meeting_room_outlined, 'Lớp', student.className ?? '-'));
+      tiles.add(
+        _buildInfoTile(
+          Icons.meeting_room_outlined,
+          'Lớp',
+          student.className ?? '-',
+        ),
+      );
     }
 
     if (tiles.isNotEmpty) {
@@ -159,16 +188,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
 
     // 3. Số điện thoại
-    tiles.add(_buildInfoTile(Icons.phone_android_outlined, 'Số điện thoại', session.user?.phone ?? ''));
+    tiles.add(
+      _buildInfoTile(
+        Icons.phone_android_outlined,
+        'Số điện thoại',
+        session.user?.phone ?? '',
+      ),
+    );
 
     // Chuyển đổi con (dành cho Phụ huynh)
     if (session.isParent && session.children.length > 1) {
       tiles.add(const Divider(height: 1, color: AppColors.border, indent: 70));
       tiles.add(
         ListTile(
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 4,
+          ),
           leading: _buildTileIcon(Icons.swap_horiz, AppColors.info),
-          title: const Text('Chọn hồ sơ con khác', style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.ink)),
+          title: const Text(
+            'Chọn hồ sơ con khác',
+            style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.ink),
+          ),
           trailing: const Icon(Icons.chevron_right, color: AppColors.inkLight),
           onTap: _pickChild,
         ),
@@ -196,8 +237,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
       leading: _buildTileIcon(icon, AppColors.primary),
-      title: Text(label, style: const TextStyle(color: AppColors.inkLight, fontSize: 13, fontWeight: FontWeight.w500)),
-      subtitle: Text(value, style: const TextStyle(color: AppColors.ink, fontSize: 16, fontWeight: FontWeight.w700, height: 1.4)),
+      title: Text(
+        label,
+        style: const TextStyle(
+          color: AppColors.inkLight,
+          fontSize: 13,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      subtitle: Text(
+        value,
+        style: const TextStyle(
+          color: AppColors.ink,
+          fontSize: 16,
+          fontWeight: FontWeight.w700,
+          height: 1.4,
+        ),
+      ),
     );
   }
 
@@ -217,7 +273,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: AppColors.danger.withValues(alpha: 0.3), width: 1.0),
+        border: Border.all(
+          color: AppColors.danger.withValues(alpha: 0.3),
+          width: 1.0,
+        ),
         boxShadow: [
           BoxShadow(
             color: AppColors.danger.withValues(alpha: 0.05),
@@ -229,7 +288,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         leading: _buildTileIcon(Icons.logout, AppColors.danger),
-        title: const Text('Đăng xuất', style: TextStyle(color: AppColors.danger, fontWeight: FontWeight.bold, fontSize: 16)),
+        title: const Text(
+          'Đăng xuất',
+          style: TextStyle(
+            color: AppColors.danger,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
         onTap: () => _confirmLogout(context),
       ),
     );
@@ -247,21 +313,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
           children: [
             const Padding(
               padding: EdgeInsets.all(16),
-              child: Text('Chọn con đang theo dõi',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              child: Text(
+                'Chọn con đang theo dõi',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
             ),
             for (final c in session.children)
               ListTile(
                 leading: CircleAvatar(
                   backgroundColor: AppColors.surfaceTint,
-                  child: Text(c.fullName.characters.first,
-                      style: const TextStyle(
-                          color: AppColors.primaryDark,
-                          fontWeight: FontWeight.bold)),
+                  child: Text(
+                    c.fullName.characters.first,
+                    style: const TextStyle(
+                      color: AppColors.primaryDark,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-                title: Text(c.fullName,
-                    style: const TextStyle(fontWeight: FontWeight.w600)),
-                subtitle: Text('Mã: ${c.studentCode} • Lớp ${c.className ?? '-'}'),
+                title: Text(
+                  c.fullName,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
+                subtitle: Text(
+                  'Mã: ${c.studentCode} • Lớp ${c.className ?? '-'}',
+                ),
                 trailing: c.id == session.currentStudent?.id
                     ? const Icon(Icons.check_circle, color: AppColors.success)
                     : null,

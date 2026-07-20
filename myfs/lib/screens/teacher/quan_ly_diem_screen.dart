@@ -35,9 +35,7 @@ class _QuanLyDiemScreenState extends State<QuanLyDiemScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Lớp giảng dạy'),
-      ),
+      appBar: AppBar(title: const Text('Lớp giảng dạy')),
       body: FutureBuilder<List<dynamic>>(
         future: _futureAssignments,
         builder: (context, snap) {
@@ -66,23 +64,39 @@ class _QuanLyDiemScreenState extends State<QuanLyDiemScreen> {
                 return Card(
                   margin: const EdgeInsets.only(bottom: 12),
                   elevation: 1.2,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
                   child: ListTile(
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     leading: CircleAvatar(
                       backgroundColor: AppColors.surfaceTint,
                       radius: 24,
-                      child: const Icon(Icons.class_outlined, color: AppColors.primary),
+                      child: const Icon(
+                        Icons.class_outlined,
+                        color: AppColors.primary,
+                      ),
                     ),
                     title: Text(
                       '${item['subject']} • ${item['className']}',
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                     subtitle: Padding(
                       padding: const EdgeInsets.only(top: 4),
-                      child: Text('${item['semester']} | Năm học: ${item['academicYear']}'),
+                      child: Text(
+                        '${item['semester']} | Năm học: ${item['academicYear']}',
+                      ),
                     ),
-                    trailing: const Icon(Icons.chevron_right, color: Colors.grey),
+                    trailing: const Icon(
+                      Icons.chevron_right,
+                      color: Colors.grey,
+                    ),
                     onTap: () {
                       Navigator.push(
                         context,
@@ -124,10 +138,12 @@ class _TeacherClassStudentsScreen extends StatefulWidget {
   });
 
   @override
-  State<_TeacherClassStudentsScreen> createState() => _TeacherClassStudentsScreenState();
+  State<_TeacherClassStudentsScreen> createState() =>
+      _TeacherClassStudentsScreenState();
 }
 
-class _TeacherClassStudentsScreenState extends State<_TeacherClassStudentsScreen> {
+class _TeacherClassStudentsScreenState
+    extends State<_TeacherClassStudentsScreen> {
   late Future<List<dynamic>> _futureData;
   final String _teacherName = Session.instance.user?.fullName ?? '';
 
@@ -157,14 +173,14 @@ class _TeacherClassStudentsScreenState extends State<_TeacherClassStudentsScreen
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('${widget.subject} • ${widget.className}'),
-      ),
+      appBar: AppBar(title: Text('${widget.subject} • ${widget.className}')),
       body: FutureBuilder<List<dynamic>>(
         future: _futureData,
         builder: (context, snap) {
-          if (snap.connectionState == ConnectionState.waiting) return const LoadingView();
-          if (snap.hasError) return ErrorView(message: snap.error.toString(), onRetry: _reload);
+          if (snap.connectionState == ConnectionState.waiting)
+            return const LoadingView();
+          if (snap.hasError)
+            return ErrorView(message: snap.error.toString(), onRetry: _reload);
 
           final students = snap.data![0] as List<Student>;
           final grades = snap.data![1] as List<Grade>;
@@ -185,16 +201,21 @@ class _TeacherClassStudentsScreenState extends State<_TeacherClassStudentsScreen
               itemBuilder: (context, i) {
                 final s = students[i];
                 // Find grade for this student
-                final gradeList = grades.where((g) => g.studentId == s.id).toList();
+                final gradeList = grades
+                    .where((g) => g.studentId == s.id)
+                    .toList();
                 final grade = gradeList.isNotEmpty ? gradeList.first : null;
 
                 return Card(
                   margin: const EdgeInsets.only(bottom: 10),
                   elevation: 1.2,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
                   child: ListTile(
                     leading: CircleAvatar(
-                      backgroundColor: grade != null && grade.averageScore != null
+                      backgroundColor:
+                          grade != null && grade.averageScore != null
                           ? AppColors.gradeBadge(grade.gradeLetter)
                           : Colors.grey.shade200,
                       child: Text(
@@ -202,22 +223,38 @@ class _TeacherClassStudentsScreenState extends State<_TeacherClassStudentsScreen
                             ? (grade.gradeLetter ?? '')
                             : '-',
                         style: TextStyle(
-                            color: grade != null && grade.averageScore != null ? Colors.white : Colors.grey.shade600,
-                            fontWeight: FontWeight.bold),
+                          color: grade != null && grade.averageScore != null
+                              ? Colors.white
+                              : Colors.grey.shade600,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                    title: Text(s.fullName, style: const TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text('ĐTB: ${grade?.averageScore?.toStringAsFixed(1) ?? "Chưa có"}',
-                        style: TextStyle(
-                            color: grade?.averageScore != null ? AppColors.primary : Colors.grey,
-                            fontWeight: FontWeight.w600)),
-                    trailing: const Icon(Icons.edit_outlined, color: Colors.grey),
+                    title: Text(
+                      s.fullName,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      'ĐTB: ${grade?.averageScore?.toStringAsFixed(1) ?? "Chưa có"}',
+                      style: TextStyle(
+                        color: grade?.averageScore != null
+                            ? AppColors.primary
+                            : Colors.grey,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    trailing: const Icon(
+                      Icons.edit_outlined,
+                      color: Colors.grey,
+                    ),
                     onTap: () async {
                       final result = await showModalBottomSheet<bool>(
                         context: context,
                         isScrollControlled: true,
                         shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
                         ),
                         builder: (_) => _GradeFormSheet(
                           student: s,
@@ -276,8 +313,12 @@ class _GradeFormSheetState extends State<_GradeFormSheet> {
     super.initState();
     final g = widget.existing;
     _regularCtrl = TextEditingController(text: g?.regularScores ?? '');
-    _midtermCtrl = TextEditingController(text: g?.midtermScore?.toStringAsFixed(1) ?? '');
-    _finalCtrl = TextEditingController(text: g?.finalScore?.toStringAsFixed(1) ?? '');
+    _midtermCtrl = TextEditingController(
+      text: g?.midtermScore?.toStringAsFixed(1) ?? '',
+    );
+    _finalCtrl = TextEditingController(
+      text: g?.finalScore?.toStringAsFixed(1) ?? '',
+    );
   }
 
   @override
@@ -336,7 +377,9 @@ class _GradeFormSheetState extends State<_GradeFormSheet> {
   Widget build(BuildContext context) {
     return Padding(
       // đẩy form lên trên bàn phím
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: SingleChildScrollView(
         padding: const EdgeInsets.fromLTRB(20, 20, 20, 24),
         child: Form(
@@ -347,7 +390,10 @@ class _GradeFormSheetState extends State<_GradeFormSheet> {
             children: [
               Text(
                 'Nhập điểm • ${widget.student.fullName}',
-                style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 18),
               TextFormField(
@@ -364,16 +410,26 @@ class _GradeFormSheetState extends State<_GradeFormSheet> {
                   Expanded(
                     child: TextFormField(
                       controller: _midtermCtrl,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      decoration: const InputDecoration(labelText: 'Điểm Giữa kỳ', prefixIcon: Icon(Icons.looks_two_outlined)),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      decoration: const InputDecoration(
+                        labelText: 'Điểm Giữa kỳ',
+                        prefixIcon: Icon(Icons.looks_two_outlined),
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: TextFormField(
                       controller: _finalCtrl,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      decoration: const InputDecoration(labelText: 'Điểm Cuối kỳ', prefixIcon: Icon(Icons.looks_3_outlined)),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      decoration: const InputDecoration(
+                        labelText: 'Điểm Cuối kỳ',
+                        prefixIcon: Icon(Icons.looks_3_outlined),
+                      ),
                     ),
                   ),
                 ],
@@ -382,7 +438,14 @@ class _GradeFormSheetState extends State<_GradeFormSheet> {
               FilledButton(
                 onPressed: _saving ? null : _save,
                 child: _saving
-                    ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.4, color: Colors.white))
+                    ? const SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.4,
+                          color: Colors.white,
+                        ),
+                      )
                     : const Text('Lưu thay đổi'),
               ),
             ],

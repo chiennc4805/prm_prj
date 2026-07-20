@@ -58,12 +58,18 @@ class _OtpScreenState extends State<OtpScreen> {
       _startTimer();
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Đã gửi lại mã OTP'), backgroundColor: AppColors.success),
+        const SnackBar(
+          content: Text('Đã gửi lại mã OTP'),
+          backgroundColor: AppColors.success,
+        ),
       );
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString()), backgroundColor: AppColors.danger),
+        SnackBar(
+          content: Text(e.toString()),
+          backgroundColor: AppColors.danger,
+        ),
       );
     } finally {
       if (mounted) setState(() => _isResending = false);
@@ -93,7 +99,11 @@ class _OtpScreenState extends State<OtpScreen> {
     final defaultPinTheme = PinTheme(
       width: 50,
       height: 56,
-      textStyle: const TextStyle(fontSize: 22, color: AppColors.ink, fontWeight: FontWeight.w600),
+      textStyle: const TextStyle(
+        fontSize: 22,
+        color: AppColors.ink,
+        fontWeight: FontWeight.w600,
+      ),
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.border),
         borderRadius: BorderRadius.circular(12),
@@ -117,12 +127,20 @@ class _OtpScreenState extends State<OtpScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 12),
-            const Icon(Icons.mark_email_read_outlined, size: 64, color: AppColors.primary),
+            const Icon(
+              Icons.mark_email_read_outlined,
+              size: 64,
+              color: AppColors.primary,
+            ),
             const SizedBox(height: 16),
             const Text(
               'Nhập mã xác thực',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.ink),
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w800,
+                color: AppColors.ink,
+              ),
             ),
             const SizedBox(height: 8),
             Text(
@@ -148,24 +166,35 @@ class _OtpScreenState extends State<OtpScreen> {
               Text(
                 _errorMsg!,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: AppColors.danger, fontWeight: FontWeight.w500),
-              )
+                style: const TextStyle(
+                  color: AppColors.danger,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ],
             const SizedBox(height: 32),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text('Chưa nhận được mã? ', style: TextStyle(color: AppColors.ink)),
+                const Text(
+                  'Chưa nhận được mã? ',
+                  style: TextStyle(color: AppColors.ink),
+                ),
                 if (_countdown > 0)
                   Text(
                     'Gửi lại sau ${_countdown}s',
-                    style: const TextStyle(color: AppColors.primaryDark, fontWeight: FontWeight.w600),
+                    style: const TextStyle(
+                      color: AppColors.primaryDark,
+                      fontWeight: FontWeight.w600,
+                    ),
                   )
                 else
                   _isResending
                       ? const SizedBox(
-                          width: 16, height: 16,
-                          child: CircularProgressIndicator(strokeWidth: 2))
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
                       : TextButton(
                           onPressed: _resendOtp,
                           style: TextButton.styleFrom(
@@ -173,10 +202,13 @@ class _OtpScreenState extends State<OtpScreen> {
                             minimumSize: Size.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          child: const Text('Gửi lại ngay', style: TextStyle(fontWeight: FontWeight.bold)),
+                          child: const Text(
+                            'Gửi lại ngay',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
               ],
-            )
+            ),
           ],
         ),
       ),

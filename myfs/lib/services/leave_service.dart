@@ -15,17 +15,25 @@ class LeaveService {
   /// Lịch sử đơn của 1 học sinh.
   static Future<List<LeaveRequest>> byStudent(int studentId) async {
     final list = await ApiClient.getList('/api/leaves/student/$studentId');
-    return list.map((e) => LeaveRequest.fromJson(e as Map<String, dynamic>)).toList();
+    return list
+        .map((e) => LeaveRequest.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   /// Đơn của 1 lớp (giáo viên duyệt).
   static Future<List<LeaveRequest>> byClass(int classId) async {
     final list = await ApiClient.getList('/api/leaves/class/$classId');
-    return list.map((e) => LeaveRequest.fromJson(e as Map<String, dynamic>)).toList();
+    return list
+        .map((e) => LeaveRequest.fromJson(e as Map<String, dynamic>))
+        .toList();
   }
 
   /// Giáo viên duyệt/từ chối đơn.
-  static Future<LeaveRequest> updateStatus(int id, String status, int reviewerId) async {
+  static Future<LeaveRequest> updateStatus(
+    int id,
+    String status,
+    int reviewerId,
+  ) async {
     final data = await ApiClient.put('/api/leaves/$id/status', {
       'status': status,
       'reviewedById': reviewerId,

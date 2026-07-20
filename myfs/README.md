@@ -1,4 +1,4 @@
-# My F-School
+# FPT Schools
 
 Dự án ứng dụng quản lý trường học dành cho Sinh viên, Phụ huynh và Giáo viên.
 

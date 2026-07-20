@@ -9,48 +9,94 @@ import jakarta.persistence.*;
 @Table(name = "club")
 public class Club {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-    @Column(name = "name", nullable = false, length = 150)
-    private String name;
+  @Column(name = "name", nullable = false, length = 150)
+  private String name;
 
-    @Column(name = "description", columnDefinition = "NVARCHAR(MAX)")
-    private String description;
+  @Column(name = "description", columnDefinition = "NVARCHAR(MAX)")
+  private String description;
 
-    @Column(name = "category", length = 50)
-    private String category;
+  @Column(name = "category", length = 50)
+  private String category;
 
-    @Column(name = "meeting_time", length = 100)
-    private String meetingTime;
+  @Column(name = "meeting_time", length = 100)
+  private String meetingTime;
 
-    @Column(name = "location", length = 150)
-    private String location;
+  @Column(name = "location", length = 150)
+  private String location;
 
-    @Column(name = "contact", length = 100)
-    private String contact;
+  @Column(name = "contact", length = 100)
+  private String contact;
 
-    @Column(name = "member_count", nullable = false)
-    private Integer memberCount = 0;
+  @Column(name = "member_count", nullable = false)
+  private Integer memberCount = 0;
 
-    public Club() {}
+  public Club() {}
 
-    public Integer getId()          { return id; }
-    public String  getName()        { return name; }
-    public String  getDescription() { return description; }
-    public String  getCategory()    { return category; }
-    public String  getMeetingTime() { return meetingTime; }
-    public String  getLocation()    { return location; }
-    public String  getContact()     { return contact; }
-    public Integer getMemberCount() { return memberCount; }
+  public Integer getId() {
+    return id;
+  }
 
-    public void setId(Integer v)          { this.id = v; }
-    public void setName(String v)         { this.name = v; }
-    public void setDescription(String v)  { this.description = v; }
-    public void setCategory(String v)     { this.category = v; }
-    public void setMeetingTime(String v)  { this.meetingTime = v; }
-    public void setLocation(String v)     { this.location = v; }
-    public void setContact(String v)      { this.contact = v; }
-    public void setMemberCount(Integer v) { this.memberCount = v; }
+  public String getName() {
+    return name;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public String getCategory() {
+    return category;
+  }
+
+  public String getMeetingTime() {
+    return meetingTime;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public String getContact() {
+    return contact;
+  }
+
+  public Integer getMemberCount() {
+    return memberCount;
+  }
+
+  public void setId(Integer v) {
+    this.id = v;
+  }
+
+  public void setName(String v) {
+    this.name = v;
+  }
+
+  public void setDescription(String v) {
+    this.description = v;
+  }
+
+  public void setCategory(String v) {
+    this.category = v;
+  }
+
+  public void setMeetingTime(String v) {
+    this.meetingTime = v;
+  }
+
+  public void setLocation(String v) {
+    this.location = v;
+  }
+
+  public void setContact(String v) {
+    this.contact = v;
+  }
+
+  public void setMemberCount(Integer v) {
+    this.memberCount = v;
+  }
 }

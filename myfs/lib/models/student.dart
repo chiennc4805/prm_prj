@@ -21,13 +21,13 @@ class Student {
   });
 
   factory Student.fromJson(Map<String, dynamic> json) => Student(
-        id: json['id'] as int,
-        studentCode: json['studentCode'] as String,
-        fullName: json['fullName'] as String,
-        dateOfBirth: json['dateOfBirth'] as String?,
-        gender: json['gender'] as String?,
-        classId: json['classId'] as int?,
-        parentId: json['parentId'] as int?,
-        className: json['className'] as String?,
-      );
+    id: json['id'] as int,
+    studentCode: json['studentCode'] as String,
+    fullName: json['fullName'] as String,
+    dateOfBirth: json['dateOfBirth'] as String?,
+    gender: json['gender'] as String?,
+    classId: json['classId'] as int?,
+    parentId: json['parentId'] as int?,
+    className: json['className'] as String?,
+  );
 }

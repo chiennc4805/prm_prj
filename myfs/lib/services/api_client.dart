@@ -42,8 +42,11 @@ class ApiClient {
 
   // ── POST ───────────────────────────────────────────────────────────
   static Future<dynamic> post(String path, Object body) async {
-    final res = await http.post(Uri.parse('$baseUrl$path'),
-        headers: _headers, body: jsonEncode(body));
+    final res = await http.post(
+      Uri.parse('$baseUrl$path'),
+      headers: _headers,
+      body: jsonEncode(body),
+    );
     _ensureOk(res);
     if (res.bodyBytes.isEmpty) return null;
     return jsonDecode(utf8.decode(res.bodyBytes));
@@ -51,8 +54,11 @@ class ApiClient {
 
   // ── PUT ────────────────────────────────────────────────────────────
   static Future<dynamic> put(String path, Object body) async {
-    final res = await http.put(Uri.parse('$baseUrl$path'),
-        headers: _headers, body: jsonEncode(body));
+    final res = await http.put(
+      Uri.parse('$baseUrl$path'),
+      headers: _headers,
+      body: jsonEncode(body),
+    );
     _ensureOk(res);
     if (res.bodyBytes.isEmpty) return null;
     return jsonDecode(utf8.decode(res.bodyBytes));
@@ -60,7 +66,10 @@ class ApiClient {
 
   // ── DELETE ─────────────────────────────────────────────────────────
   static Future<void> delete(String path) async {
-    final res = await http.delete(Uri.parse('$baseUrl$path'), headers: _headers);
+    final res = await http.delete(
+      Uri.parse('$baseUrl$path'),
+      headers: _headers,
+    );
     _ensureOk(res);
   }
 
@@ -73,7 +82,9 @@ class ApiClient {
       if (decoded is Map && decoded['message'] != null) {
         msg = decoded['message'].toString();
       }
-    } catch (_) {/* body không phải JSON */}
+    } catch (_) {
+      /* body không phải JSON */
+    }
     throw ApiException(res.statusCode, msg);
   }
 }

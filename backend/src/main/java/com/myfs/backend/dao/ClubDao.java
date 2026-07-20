@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 
 /** DAO cho bảng club (câu lạc bộ). */
 @Repository
-public interface ClubDao extends JpaRepository<Club, Integer> {
-}
+public interface ClubDao extends JpaRepository<Club, Integer> {}

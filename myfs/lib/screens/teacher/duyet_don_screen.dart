@@ -45,7 +45,8 @@ class _DuyetDonScreenState extends State<DuyetDonScreen> {
     final ok = await AppDialogs.showConfirm(
       context: context,
       title: approve ? 'Duyệt đơn' : 'Từ chối đơn',
-      content: '${approve ? 'Duyệt' : 'Từ chối'} đơn xin nghỉ của ${r.studentName} '
+      content:
+          '${approve ? 'Duyệt' : 'Từ chối'} đơn xin nghỉ của ${r.studentName} '
           '(${r.fromDate == r.toDate ? r.fromDate : '${r.fromDate} → ${r.toDate}'})?',
       confirmText: approve ? 'Duyệt' : 'Từ chối',
       isDanger: !approve,
@@ -56,10 +57,12 @@ class _DuyetDonScreenState extends State<DuyetDonScreen> {
       final reviewerId = Session.instance.user!.id;
       await LeaveService.updateStatus(r.id!, status, reviewerId);
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(approve ? 'Đã duyệt đơn.' : 'Đã từ chối đơn.'),
-          backgroundColor: approve ? AppColors.success : AppColors.danger,
-        ));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(approve ? 'Đã duyệt đơn.' : 'Đã từ chối đơn.'),
+            backgroundColor: approve ? AppColors.success : AppColors.danger,
+          ),
+        );
         _reload();
       }
     } catch (e) {
@@ -76,12 +79,15 @@ class _DuyetDonScreenState extends State<DuyetDonScreen> {
     final className = Session.instance.homeroomClass?.name ?? '';
     return Scaffold(
       appBar: AppBar(
-        title: Text(className.isEmpty ? 'Duyệt đơn từ' : 'Duyệt đơn từ • $className'),
+        title: Text(
+          className.isEmpty ? 'Duyệt đơn từ' : 'Duyệt đơn từ • $className',
+        ),
       ),
       body: _classId == null
           ? const EmptyView(
               icon: Icons.meeting_room_outlined,
-              message: 'Bạn chưa được phân công lớp chủ nhiệm.')
+              message: 'Bạn chưa được phân công lớp chủ nhiệm.',
+            )
           : Column(
               children: [
                 // ── Bộ lọc trạng thái ─────────────────────────────────
@@ -108,7 +114,9 @@ class _DuyetDonScreenState extends State<DuyetDonScreen> {
                       }
                       if (snap.hasError) {
                         return ErrorView(
-                            message: snap.error.toString(), onRetry: _reload);
+                          message: snap.error.toString(),
+                          onRetry: _reload,
+                        );
                       }
                       var list = snap.data ?? [];
                       if (_filter != 'ALL') {
@@ -116,10 +124,11 @@ class _DuyetDonScreenState extends State<DuyetDonScreen> {
                       }
                       if (list.isEmpty) {
                         return EmptyView(
-                            icon: Icons.inbox_outlined,
-                            message: _filter == 'PENDING_TEACHER'
-                                ? 'Không có đơn chờ duyệt.'
-                                : 'Không có đơn từ nào.');
+                          icon: Icons.inbox_outlined,
+                          message: _filter == 'PENDING_TEACHER'
+                              ? 'Không có đơn chờ duyệt.'
+                              : 'Không có đơn từ nào.',
+                        );
                       }
                       return RefreshIndicator(
                         onRefresh: () async => _reload(),
@@ -153,14 +162,16 @@ class _DuyetDonScreenState extends State<DuyetDonScreen> {
           fontSize: 13,
         ),
         backgroundColor: AppColors.surfaceTint.withValues(alpha: 0.5),
-        side: BorderSide(color: selected ? AppColors.primary : AppColors.border),
+        side: BorderSide(
+          color: selected ? AppColors.primary : AppColors.border,
+        ),
       ),
     );
   }
 
   Widget _leaveCard(LeaveRequest r) {
     final pending = r.status == 'PENDING_TEACHER';
-    
+
     Color typeColor;
     String typeLabel;
     IconData typeIcon;
@@ -190,11 +201,13 @@ class _DuyetDonScreenState extends State<DuyetDonScreen> {
 
     String timeText = '';
     if (r.leaveType == 'ABSENT') {
-      timeText = r.fromDate == r.toDate ? 'Ngày ${r.fromDate}' : 'Từ ${r.fromDate} đến ${r.toDate}';
+      timeText = r.fromDate == r.toDate
+          ? 'Ngày ${r.fromDate}'
+          : 'Từ ${r.fromDate} đến ${r.toDate}';
     } else if (r.leaveType == 'LATE' || r.leaveType == 'EARLY') {
       timeText = 'Ngày ${r.fromDate} • ${r.timeValue ?? ''}';
     } else {
-      timeText = 'Ngày tạo: ${r.fromDate}'; 
+      timeText = 'Ngày tạo: ${r.fromDate}';
     }
 
     return Card(
@@ -211,21 +224,30 @@ class _DuyetDonScreenState extends State<DuyetDonScreen> {
                 CircleAvatar(
                   radius: 18,
                   backgroundColor: AppColors.surfaceTint,
-                  child: Text(r.studentName.characters.first,
-                      style: const TextStyle(
-                          color: AppColors.primaryDark,
-                          fontWeight: FontWeight.bold)),
+                  child: Text(
+                    r.studentName.characters.first,
+                    style: const TextStyle(
+                      color: AppColors.primaryDark,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(r.studentName,
-                          style: const TextStyle(fontWeight: FontWeight.bold)),
-                      Text('Mã: ${r.studentCode}',
-                          style:
-                              const TextStyle(fontSize: 12, color: Colors.grey)),
+                      Text(
+                        r.studentName,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        'Mã: ${r.studentCode}',
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -236,7 +258,10 @@ class _DuyetDonScreenState extends State<DuyetDonScreen> {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: typeColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(6),
@@ -245,7 +270,14 @@ class _DuyetDonScreenState extends State<DuyetDonScreen> {
                     children: [
                       Icon(typeIcon, size: 14, color: typeColor),
                       const SizedBox(width: 4),
-                      Text(typeLabel, style: TextStyle(color: typeColor, fontSize: 12, fontWeight: FontWeight.bold)),
+                      Text(
+                        typeLabel,
+                        style: TextStyle(
+                          color: typeColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -254,11 +286,18 @@ class _DuyetDonScreenState extends State<DuyetDonScreen> {
             const SizedBox(height: 8),
             Text(
               r.leaveType == 'OTHER' ? (r.title ?? 'Đơn từ khác') : timeText,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.ink),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 14,
+                color: AppColors.ink,
+              ),
             ),
             if (r.leaveType == 'OTHER') ...[
               const SizedBox(height: 4),
-              Text(timeText, style: const TextStyle(fontSize: 13, color: Colors.grey)),
+              Text(
+                timeText,
+                style: const TextStyle(fontSize: 13, color: Colors.grey),
+              ),
             ],
             const SizedBox(height: 6),
             Text('Lý do: ${r.reason}', style: const TextStyle(fontSize: 14)),
@@ -275,7 +314,8 @@ class _DuyetDonScreenState extends State<DuyetDonScreen> {
                         foregroundColor: AppColors.danger,
                         side: const BorderSide(color: AppColors.danger),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
                     ),
                   ),
@@ -289,7 +329,8 @@ class _DuyetDonScreenState extends State<DuyetDonScreen> {
                         backgroundColor: AppColors.success,
                         minimumSize: const Size.fromHeight(40),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                       ),
                     ),
                   ),

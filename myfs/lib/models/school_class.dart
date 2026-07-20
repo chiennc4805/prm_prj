@@ -13,9 +13,9 @@ class SchoolClass {
   });
 
   factory SchoolClass.fromJson(Map<String, dynamic> json) => SchoolClass(
-        id: json['id'] as int,
-        name: json['name'] as String,
-        academicYear: json['academicYear'] as String,
-        homeroomTeacherId: json['homeroomTeacherId'] as int?,
-      );
+    id: json['id'] as int,
+    name: json['name'] as String,
+    academicYear: json['academicYear'] as String,
+    homeroomTeacherId: json['homeroomTeacherId'] as int?,
+  );
 }

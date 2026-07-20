@@ -49,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
       if (!mounted) return;
-      
+
       final session = Session.instance;
       if (session.user != null && session.user!.roles.length > 1) {
         _showRolePicker();
@@ -131,9 +131,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _goToHome() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (_) => const HomePage()),
-    );
+    Navigator.of(
+      context,
+    ).pushReplacement(MaterialPageRoute(builder: (_) => const HomePage()));
   }
 
   void _showMessage(String message) {
@@ -144,7 +144,9 @@ class _LoginScreenState extends State<LoginScreen> {
           content: Text(message),
           backgroundColor: AppColors.danger,
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
         ),
       );
   }
@@ -177,7 +179,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 Expanded(
                   child: Center(
                     child: SingleChildScrollView(
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 24,
+                      ),
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: 400),
                         child: _LoginCard(
@@ -188,7 +193,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           rememberMe: _rememberMe,
                           isSubmitting: _isSubmitting,
                           onPasswordVisibilityChanged: () {
-                            setState(() => _obscurePassword = !_obscurePassword);
+                            setState(
+                              () => _obscurePassword = !_obscurePassword,
+                            );
                           },
                           onRememberChanged: (value) {
                             setState(() => _rememberMe = value);
@@ -400,10 +407,7 @@ class _AuthTextField extends StatelessWidget {
       obscureText: obscureText,
       validator: validator,
       onFieldSubmitted: onFieldSubmitted,
-      style: const TextStyle(
-        color: AppColors.ink,
-        fontWeight: FontWeight.w600,
-      ),
+      style: const TextStyle(color: AppColors.ink, fontWeight: FontWeight.w600),
       decoration: InputDecoration(
         labelText: label,
         hintText: hint,

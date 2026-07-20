@@ -30,20 +30,30 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _submitting = true);
     try {
-      final message = await AuthService.updatePassword(widget.phone, _passCtrl.text);
+      final message = await AuthService.updatePassword(
+        widget.phone,
+        _passCtrl.text,
+      );
       if (!mounted) return;
       await showDialog<void>(
         context: context,
         barrierDismissible: false,
         builder: (ctx) => AlertDialog(
-          icon: const Icon(Icons.check_circle, color: AppColors.success, size: 40),
+          icon: const Icon(
+            Icons.check_circle,
+            color: AppColors.success,
+            size: 40,
+          ),
           title: const Text('Thành công'),
           content: Text(message, textAlign: TextAlign.center),
           actions: [
             FilledButton(
               onPressed: () {
                 Navigator.pop(ctx); // Đóng dialog
-                Navigator.popUntil(context, (route) => route.isFirst); // Về màn Login
+                Navigator.popUntil(
+                  context,
+                  (route) => route.isFirst,
+                ); // Về màn Login
               },
               child: const Text('Đăng nhập ngay'),
             ),
@@ -53,7 +63,10 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString()), backgroundColor: AppColors.danger),
+        SnackBar(
+          content: Text(e.toString()),
+          backgroundColor: AppColors.danger,
+        ),
       );
     } finally {
       if (mounted) setState(() => _submitting = false);
@@ -77,7 +90,11 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
               const Text(
                 'Tạo mật khẩu mới',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: AppColors.ink),
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.ink,
+                ),
               ),
               const SizedBox(height: 8),
               const Text(
@@ -93,13 +110,18 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   labelText: 'Mật khẩu mới',
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: IconButton(
-                    icon: Icon(_obscurePass ? Icons.visibility_off : Icons.visibility),
-                    onPressed: () => setState(() => _obscurePass = !_obscurePass),
+                    icon: Icon(
+                      _obscurePass ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () =>
+                        setState(() => _obscurePass = !_obscurePass),
                   ),
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) return 'Vui lòng nhập mật khẩu mới.';
-                  if (value.length < 6) return 'Mật khẩu phải có ít nhất 6 ký tự.';
+                  if (value == null || value.isEmpty)
+                    return 'Vui lòng nhập mật khẩu mới.';
+                  if (value.length < 6)
+                    return 'Mật khẩu phải có ít nhất 6 ký tự.';
                   return null;
                 },
               ),
@@ -111,13 +133,18 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                   labelText: 'Xác nhận mật khẩu',
                   prefixIcon: const Icon(Icons.lock_outline),
                   suffixIcon: IconButton(
-                    icon: Icon(_obscureConfirm ? Icons.visibility_off : Icons.visibility),
-                    onPressed: () => setState(() => _obscureConfirm = !_obscureConfirm),
+                    icon: Icon(
+                      _obscureConfirm ? Icons.visibility_off : Icons.visibility,
+                    ),
+                    onPressed: () =>
+                        setState(() => _obscureConfirm = !_obscureConfirm),
                   ),
                 ),
                 validator: (value) {
-                  if (value == null || value.isEmpty) return 'Vui lòng xác nhận mật khẩu.';
-                  if (value != _passCtrl.text) return 'Mật khẩu xác nhận không khớp.';
+                  if (value == null || value.isEmpty)
+                    return 'Vui lòng xác nhận mật khẩu.';
+                  if (value != _passCtrl.text)
+                    return 'Mật khẩu xác nhận không khớp.';
                   return null;
                 },
               ),
@@ -126,8 +153,13 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                 onPressed: _submitting ? null : _submit,
                 child: _submitting
                     ? const SizedBox(
-                        width: 22, height: 22,
-                        child: CircularProgressIndicator(strokeWidth: 2.4, color: Colors.white))
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.4,
+                          color: Colors.white,
+                        ),
+                      )
                     : const Text('Cập nhật mật khẩu'),
               ),
             ],
