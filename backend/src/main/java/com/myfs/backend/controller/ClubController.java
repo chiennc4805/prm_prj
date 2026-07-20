@@ -7,15 +7,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * ClubController – REST API câu lạc bộ (CLB).
- *   GET /api/clubs – danh sách CLB.
+ * REST API câu lạc bộ.
+ * GET /api/clubs - danh sách câu lạc bộ.
  */
 @RestController
 @RequestMapping("/api/clubs")
 public class ClubController {
 
     private final ClubDao clubDao;
-
     public ClubController(ClubDao clubDao) {
         this.clubDao = clubDao;
     }

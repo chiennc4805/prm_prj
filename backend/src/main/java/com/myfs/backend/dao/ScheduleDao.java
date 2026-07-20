@@ -1,15 +1,11 @@
 package com.myfs.backend.dao;
-
 import com.myfs.backend.model.Schedule;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-/** DAO cho bảng schedule (lịch học / TKB). */
-@Repository
-public interface ScheduleDao extends JpaRepository<Schedule, Integer> {
-
-    /** Thời khóa biểu của 1 lớp, sắp theo thứ rồi theo tiết. */
-    List<Schedule> findByClassIdOrderByDayOrderAscPeriodAsc(Integer classId);
+import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.Param;
+import java.util.*;
+public interface ScheduleDao extends JpaRepository<Schedule,Integer> {
+    @Query("select s from Schedule s, TeacherAssignment a where s.teacherAssignmentId=a.id and a.classId=:classId order by s.dayOrder,s.period")
+    List<Schedule> findForClass(@Param("classId") Integer classId);
+    @Query("select s from Schedule s, TeacherAssignment a where s.teacherAssignmentId=a.id and a.teacherId=:teacherId order by s.dayOrder,s.period")
+    List<Schedule> findForTeacher(@Param("teacherId") Integer teacherId);
 }

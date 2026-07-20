@@ -3,6 +3,7 @@ package com.myfs.backend.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Entity ánh xạ bảng event – sự kiện của trường (SuKien).
@@ -28,7 +29,7 @@ public class Event {
     private LocalDate eventDate;
 
     @Column(name = "event_time", length = 20)
-    private String eventTime;
+    private LocalTime eventTime;
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -45,7 +46,7 @@ public class Event {
     public String    getDescription() { return description; }
     public String    getLocation()    { return location; }
     public LocalDate getEventDate()   { return eventDate; }
-    public String    getEventTime()   { return eventTime; }
+    public LocalTime getEventTime()   { return eventTime; }
     public LocalDateTime getCreatedAt() { return createdAt; }
 
     public void setId(Integer v)          { this.id = v; }
@@ -53,6 +54,6 @@ public class Event {
     public void setDescription(String v)  { this.description = v; }
     public void setLocation(String v)     { this.location = v; }
     public void setEventDate(LocalDate v) { this.eventDate = v; }
-    public void setEventTime(String v)    { this.eventTime = v; }
+    public void setEventTime(LocalTime v) { this.eventTime = v; }
     public void setCreatedAt(LocalDateTime v) { this.createdAt = v; }
 }

@@ -19,4 +19,6 @@ public interface StudentDao extends JpaRepository<Student, Integer> {
 
     /** Tìm học sinh theo mã. */
     Optional<Student> findByStudentCode(String studentCode);
+
+    Optional<Student> findByStudentAccountId(Integer studentAccountId);
 }

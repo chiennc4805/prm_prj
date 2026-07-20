@@ -11,7 +11,7 @@ void main() {
     expect(find.text('Đăng nhập'), findsWidgets);
     expect(find.text('Số điện thoại'), findsOneWidget);
     expect(
-      find.text('Copyright © 2026 FPT Student Life. All rights reserved.'),
+      find.text('Copyright © 2026 FPT Schools. All rights reserved.'),
       findsOneWidget,
     );
 

@@ -11,10 +11,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_theme.dart';
-import '../models/student.dart';
 import '../services/session.dart';
-import '../services/auth_service.dart';
-import 'login_screen.dart';
 import 'features/diem_screen.dart';
 import 'features/lich_hoc_screen.dart';
 import 'features/su_kien_screen.dart';
@@ -22,9 +19,6 @@ import 'features/don_tu_screen.dart';
 import 'features/clb_screen.dart';
 import 'features/thong_bao_screen.dart';
 import 'features/profile_screen.dart';
-import 'teacher/quan_ly_diem_screen.dart';
-import 'teacher/duyet_don_screen.dart';
-import '../widgets/ui_helpers.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,21 +31,6 @@ class _HomePageState extends State<HomePage> {
   final session = Session.instance;
 
   List<_HomeGroup> get _groups {
-    if (session.isTeacher) {
-      return [
-        _HomeGroup('Học tập & Giảng dạy', [
-          _HomeItem('ListDiemHK', 'Quản lý điểm', 'Nhập / sửa điểm lớp CN', Icons.assessment, AppColors.info, () => const QuanLyDiemScreen()),
-          _HomeItem('LichHoc', 'Lịch dạy', 'TKB lớp chủ nhiệm', Icons.calendar_month, AppColors.success, () => const LichHocScreen()),
-        ]),
-        _HomeGroup('Hoạt động', [
-          _HomeItem('SuKien', 'Sự kiện', 'Hoạt động toàn trường', Icons.event, AppColors.warning, () => const SuKienScreen()),
-          _HomeItem('CLB', 'Câu lạc bộ', 'CLB trong trường', Icons.groups, const Color(0xFF7C3AED), () => const ClbScreen()),
-        ]),
-        _HomeGroup('Hành chính', [
-          _HomeItem('DonTu', 'Duyệt đơn từ', 'Đơn xin nghỉ của lớp', Icons.fact_check, AppColors.primary, () => const DuyetDonScreen()),
-        ]),
-      ];
-    }
     final whose = session.isParent ? 'của con' : 'của bạn';
     return [
       _HomeGroup('Học tập', [
@@ -62,9 +41,10 @@ class _HomePageState extends State<HomePage> {
         _HomeItem('SuKien', 'Sự kiện', 'Hoạt động toàn trường', Icons.event, AppColors.warning, () => const SuKienScreen()),
         _HomeItem('CLB', 'Câu lạc bộ', 'CLB trong trường', Icons.groups, const Color(0xFF7C3AED), () => const ClbScreen()),
       ]),
-      _HomeGroup('Hành chính', [
-        _HomeItem('DonTu', 'Đơn từ', 'Xin nghỉ & theo dõi duyệt', Icons.description, AppColors.primary, () => const DonTuScreen()),
-      ]),
+      if (session.isParent)
+        _HomeGroup('Hành chính', [
+          _HomeItem('DonTu', 'Đơn xin nghỉ học', 'Gửi đơn cho giáo viên chủ nhiệm', Icons.description, AppColors.primary, () => const DonTuScreen()),
+        ]),
     ];
   }
 
