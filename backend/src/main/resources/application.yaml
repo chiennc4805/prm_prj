@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: backend
+
+  # ── Datasource SQL Server ──────────────────────────────────────────
+  datasource:
+    # Kết nối SQL Server local, database GradeDB, user sa, mật khẩu 123
+    url: jdbc:sqlserver://localhost:1433;databaseName=myfs;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: "Xixilemon0408@"
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  # ── JPA / Hibernate ───────────────────────────────────────────────
+  jpa:
+    hibernate:
+      ddl-auto: none        # bảng đã tạo bằng script create_table.sql
+    show-sql: true          # in SQL ra console để debug
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.SQLServerDialect
+
+  # Trả JSON cho ngày tháng dạng chuỗi ISO (yyyy-MM-dd) thay vì timestamp số
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+# ── Server ────────────────────────────────────────────────────────────
+server:
+  port: 8080
