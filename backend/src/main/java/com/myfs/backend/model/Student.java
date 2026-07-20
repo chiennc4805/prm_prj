@@ -16,4 +16,5 @@ public class Student {
     @Column(name = "class_id") private Integer classId;
     @Column(name = "parent_id") private Integer parentId;
     @Column(name = "student_account_id", unique = true) private Integer studentAccountId;
+    @Transient private String className;
 }

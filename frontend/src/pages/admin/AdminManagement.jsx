@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Plus, Trash2 } from 'lucide-react';
+import { Download, FileSpreadsheet, Plus, Trash2, Upload } from 'lucide-react';
 import { api } from '../../api';
 import { Badge, Button, Card, ErrorBox, Field, Loading, Modal, Page, Table, useLoad } from '../../components';
 
@@ -38,6 +38,7 @@ export default function AdminManagement() {
     return { rows, users, students, classes, subjects, semesters, assignments };
   }, [section]);
   const [modal, setModal] = useState(false);
+  const [excelModal, setExcelModal] = useState(false);
   const [edit, setEdit] = useState(null);
 
   if (loading) return <Loading />;
@@ -57,11 +58,41 @@ export default function AdminManagement() {
   return <Page
     title={titles[section]?.[0] || 'Quản lý'}
     subtitle={titles[section]?.[1]}
-    action={<Button onClick={() => open(null)}><Plus size={17} /> Thêm mới</Button>}
+    action={<div className="page-actions">{section === 'teachers' && <Button variant="ghost" onClick={() => setExcelModal(true)}><FileSpreadsheet size={17} /> Nhập Excel</Button>}<Button onClick={() => open(null)}><Plus size={17} /> Thêm mới</Button></div>}
   >
     <Card><Table columns={columnsFor(section, data, open, remove)} rows={data.rows} /></Card>
     {modal && <Editor section={section} value={edit} refs={data} close={() => setModal(false)} saved={() => { setModal(false); reload(); }} />}
+    {excelModal && <ExcelImport close={() => setExcelModal(false)} saved={() => { setExcelModal(false); reload(); }} />}
   </Page>;
+}
+
+function ExcelImport({ close, saved }) {
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState('');
+  const choose = (nextFile) => { setFile(nextFile || null); setPreview(null); setError(''); };
+  const check = async () => {
+    if (!file) return setError('Vui lòng chọn file Excel.');
+    setBusy(true); setError('');
+    try { setPreview(await api.upload('/api/admin/teachers/import-preview', file)); }
+    catch (nextError) { setError(nextError.message); }
+    finally { setBusy(false); }
+  };
+  const submit = async () => {
+    const teachers = preview.rows.filter((row) => row.valid).map(({ fullName, phone, email }) => ({ fullName, phone, email }));
+    if (!teachers.length) return setError('Không có giáo viên hợp lệ để nhập.');
+    setBusy(true); setError('');
+    try { const result = await api.post('/api/admin/teachers/import', { teachers }); alert(`${result.message}. Mật khẩu mặc định: 123456`); saved(); }
+    catch (nextError) { setError(nextError.message); setBusy(false); }
+  };
+  return <Modal title="Nhập giáo viên từ Excel" onClose={close}><div className="excel-import">
+    <div className="excel-guide"><FileSpreadsheet size={28} /><div><strong>File Excel danh sách giáo viên</strong><span>Gồm 3 cột: Họ và tên, Số điện thoại, Email. Chấp nhận file .xlsx tối đa 5 MB.</span></div><Button variant="ghost" onClick={() => api.download('/api/admin/teachers/import-template', 'mau-nhap-giao-vien.xlsx')}><Download size={16} /> Tải file mẫu</Button></div>
+    <label className="excel-picker"><Upload size={28} /><strong>{file?.name || 'Chọn file Excel'}</strong><span>{file ? 'Nhấn Kiểm tra dữ liệu để tiếp tục' : 'Bấm vào đây để chọn file .xlsx'}</span><input type="file" accept=".xlsx" onChange={(event) => choose(event.target.files?.[0])} /></label>
+    {error && <div className="import-error">{error}</div>}
+    {preview && <><div className="import-summary"><Badge>Tổng: {preview.totalRows}</Badge><Badge tone="green">Hợp lệ: {preview.validRows}</Badge><Badge tone="red">Có lỗi: {preview.invalidRows}</Badge></div><div className="import-table"><table><thead><tr><th>Dòng</th><th>Họ và tên</th><th>Số điện thoại</th><th>Email</th><th>Kết quả</th></tr></thead><tbody>{preview.rows.map((row) => <tr key={row.rowNumber} className={row.valid ? '' : 'invalid'}><td>{row.rowNumber}</td><td>{row.fullName || '—'}</td><td>{row.phone || '—'}</td><td>{row.email || '—'}</td><td>{row.valid ? <Badge tone="green">Hợp lệ</Badge> : <span className="row-error">{row.errors.join('; ')}</span>}</td></tr>)}</tbody></table></div></>}
+    <div className="import-actions"><Button variant="ghost" onClick={close}>Hủy</Button>{!preview ? <Button disabled={busy || !file} onClick={check}>{busy ? 'Đang kiểm tra...' : 'Kiểm tra dữ liệu'}</Button> : <><Button variant="ghost" onClick={() => choose(null)}>Chọn file khác</Button><Button disabled={busy || preview.validRows === 0} onClick={submit}>{busy ? 'Đang nhập...' : `Nhập ${preview.validRows} giáo viên`}</Button></>}</div>
+  </div></Modal>;
 }
 
 function columnsFor(section, refs, edit, remove) {
