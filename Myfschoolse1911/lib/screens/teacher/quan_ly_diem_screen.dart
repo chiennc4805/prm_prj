@@ -235,7 +235,7 @@ class _TeacherClassStudentsScreenState
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
-                      'ĐTB: ${grade?.averageScore?.toStringAsFixed(1) ?? "Chưa có"}',
+                      'ĐTB: ${grade?.averageScore == null ? "Chưa có" : Grade.formatScore(grade?.averageScore)}',
                       style: TextStyle(
                         color: grade?.averageScore != null
                             ? AppColors.primary
@@ -314,10 +314,10 @@ class _GradeFormSheetState extends State<_GradeFormSheet> {
     final g = widget.existing;
     _regularCtrl = TextEditingController(text: g?.regularScores ?? '');
     _midtermCtrl = TextEditingController(
-      text: g?.midtermScore?.toStringAsFixed(1) ?? '',
+      text: g?.midtermScore == null ? '' : Grade.formatScore(g?.midtermScore),
     );
     _finalCtrl = TextEditingController(
-      text: g?.finalScore?.toStringAsFixed(1) ?? '',
+      text: g?.finalScore == null ? '' : Grade.formatScore(g?.finalScore),
     );
   }
 

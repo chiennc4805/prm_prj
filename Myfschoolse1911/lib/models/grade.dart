@@ -73,6 +73,13 @@ class Grade {
     'teacherName': teacherName,
     'items': items.map((e) => e.toJson()).toList(),
   };
+
+  static String formatScore(num? value) {
+    if (value == null) return '--';
+    final number = value.toDouble();
+    if (number % 1 == 0) return number.toInt().toString();
+    return number.toStringAsFixed(2);
+  }
 }
 
 class GradeItem {

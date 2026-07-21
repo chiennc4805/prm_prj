@@ -60,6 +60,19 @@ export default function TeacherWorkspace() {
 
 const label = (a, d) =>
   `${d.classes.find((c) => c.id === a.classId)?.name} · ${d.subjects.find((s) => s.id === a.subjectId)?.name}`;
+
+const formatScore = (value) => {
+  if (value === null || value === undefined || value === '') return '—';
+  const number = Number(value);
+  if (Number.isNaN(number)) return value;
+  return Number.isInteger(number) ? String(number) : number.toFixed(2);
+};
+
+const formatScoreInput = (value) => {
+  if (value === null || value === undefined || value === '') return '';
+  return formatScore(value);
+};
+
 function Picker({ assignments, data, value, onChange, labelText = 'Phân công' }) {
   return (
     <Field label={labelText}>
@@ -205,7 +218,7 @@ function Grades({ user, data }) {
               {
                 key: 'average',
                 label: 'Trung bình',
-                render: (r) => <Badge tone="blue">{r.grade?.averageScore ?? '—'}</Badge>,
+                render: (r) => <Badge tone="blue">{formatScore(r.grade?.averageScore)}</Badge>,
               },
               {
                 key: 'action',
@@ -250,7 +263,9 @@ function GradeEditor({ row, close, save }) {
   const [items, setItems] = useState(
     DEFAULT_GRADE_ITEMS.map((template) => ({
       ...template,
-      score: row.grade?.items?.find((item) => item.name === template.name)?.score ?? '',
+      score: formatScoreInput(
+        row.grade?.items?.find((item) => item.name === template.name)?.score,
+      ),
     })),
   );
   const [busy, setBusy] = useState(false);
@@ -285,7 +300,7 @@ function GradeEditor({ row, close, save }) {
                     <strong>{item.name}</strong>
                   </td>
                   <td>
-                    <span className="grade-weight">{item.weight}</span>
+                    <span className="grade-weight">{formatScore(item.weight)}</span>
                   </td>
                   <td>
                     <input
@@ -481,7 +496,11 @@ function ClassGrades({ user, classId, data }) {
               render: (x) => data.semesters.find((s) => s.id === x.semesterId)?.name || '—',
             },
             { key: 'items', label: 'Số đầu điểm', render: (x) => x.items?.length || 0 },
-            { key: 'averageScore', label: 'Trung bình' },
+            {
+              key: 'averageScore',
+              label: 'Trung bình',
+              render: (x) => formatScore(x.averageScore),
+            },
           ]}
         />
       )}

@@ -207,7 +207,7 @@ class _DiemScreenState extends State<DiemScreen> with TickerProviderStateMixin {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    allCompleted ? gpa!.toStringAsFixed(1) : '--',
+                    allCompleted ? Grade.formatScore(gpa) : '--',
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 40,
@@ -274,7 +274,9 @@ class _DiemScreenState extends State<DiemScreen> with TickerProviderStateMixin {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        isCompleted ? g.averageScore!.toStringAsFixed(1) : '--',
+                        isCompleted
+                            ? Grade.formatScore(g.averageScore)
+                            : '--',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w800,
@@ -441,7 +443,7 @@ class _GradeDetailScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      g?.averageScore?.toStringAsFixed(1) ?? '--',
+                      Grade.formatScore(g?.averageScore),
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 46,
@@ -608,7 +610,7 @@ class _GradeDetailScreen extends StatelessWidget {
                 centered: true,
               ),
               _GradeCell(
-                entry.value.score.toStringAsFixed(1),
+                Grade.formatScore(entry.value.score),
                 centered: true,
                 score: true,
               ),
