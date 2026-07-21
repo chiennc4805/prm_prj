@@ -1,0 +1,36 @@
+{
+  "web": [
+    "web-login",
+    "web-admin-dashboard",
+    "web-admin-teachers",
+    "web-admin-students",
+    "web-admin-parents",
+    "web-admin-classes",
+    "web-admin-subjects",
+    "web-admin-assignments",
+    "web-admin-schedules",
+    "web-teacher-dashboard",
+    "web-teacher-classes",
+    "web-teacher-schedule",
+    "web-teacher-grades",
+    "web-teacher-notifications",
+    "web-teacher-homeroom"
+  ],
+  "mobile": [
+    "mobile-login",
+    "mobile-student-home",
+    "mobile-parent-home",
+    "mobile-grades",
+    "mobile-grade-detail",
+    "mobile-schedule",
+    "mobile-events",
+    "mobile-event-detail",
+    "mobile-clubs",
+    "mobile-club-detail",
+    "mobile-notifications",
+    "mobile-notification-detail",
+    "mobile-profile",
+    "mobile-leave-list",
+    "mobile-leave-form"
+  ]
+}

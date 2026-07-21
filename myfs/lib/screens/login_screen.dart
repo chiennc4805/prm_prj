@@ -25,7 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
 
   bool _obscurePassword = true;
-  bool _rememberMe = true;
   bool _isSubmitting = false;
 
   @override
@@ -190,15 +189,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           phoneController: _phoneController,
                           passwordController: _passwordController,
                           obscurePassword: _obscurePassword,
-                          rememberMe: _rememberMe,
                           isSubmitting: _isSubmitting,
                           onPasswordVisibilityChanged: () {
                             setState(
                               () => _obscurePassword = !_obscurePassword,
                             );
-                          },
-                          onRememberChanged: (value) {
-                            setState(() => _rememberMe = value);
                           },
                           onSubmit: _submit,
                         ),
@@ -225,10 +220,8 @@ class _LoginCard extends StatelessWidget {
     required this.phoneController,
     required this.passwordController,
     required this.obscurePassword,
-    required this.rememberMe,
     required this.isSubmitting,
     required this.onPasswordVisibilityChanged,
-    required this.onRememberChanged,
     required this.onSubmit,
   });
 
@@ -236,10 +229,8 @@ class _LoginCard extends StatelessWidget {
   final TextEditingController phoneController;
   final TextEditingController passwordController;
   final bool obscurePassword;
-  final bool rememberMe;
   final bool isSubmitting;
   final VoidCallback onPasswordVisibilityChanged;
-  final ValueChanged<bool> onRememberChanged;
   final VoidCallback onSubmit;
 
   @override
@@ -312,29 +303,6 @@ class _LoginCard extends StatelessWidget {
                 return null;
               },
             ),
-            const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: _CheckLine(
-                    value: rememberMe,
-                    onChanged: onRememberChanged,
-                    label: 'Ghi nhớ tôi',
-                  ),
-                ),
-                TextButton(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const ResetPassScreen()),
-                  ),
-                  style: TextButton.styleFrom(
-                    foregroundColor: AppColors.primary,
-                    textStyle: const TextStyle(fontWeight: FontWeight.w700),
-                  ),
-                  child: const Text('Quên mật khẩu?'),
-                ),
-              ],
-            ),
             const SizedBox(height: 22),
             FilledButton(
               onPressed: isSubmitting ? null : onSubmit,
@@ -351,6 +319,20 @@ class _LoginCard extends StatelessWidget {
                         ),
                       )
                     : const Text('Đăng nhập', key: ValueKey('label')),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Center(
+              child: TextButton(
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ResetPassScreen()),
+                ),
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.primary,
+                  textStyle: const TextStyle(fontWeight: FontWeight.w700),
+                ),
+                child: const Text('Quên mật khẩu?'),
               ),
             ),
           ],
@@ -413,54 +395,6 @@ class _AuthTextField extends StatelessWidget {
         hintText: hint,
         prefixIcon: Icon(icon),
         suffixIcon: suffixIcon,
-      ),
-    );
-  }
-}
-
-class _CheckLine extends StatelessWidget {
-  const _CheckLine({
-    required this.value,
-    required this.onChanged,
-    required this.label,
-  });
-
-  final bool value;
-  final ValueChanged<bool> onChanged;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(12),
-      onTap: () => onChanged(!value),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SizedBox(
-            width: 32,
-            height: 32,
-            child: Checkbox(
-              value: value,
-              onChanged: (checked) => onChanged(checked ?? false),
-              activeColor: AppColors.primary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(6),
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
-          Flexible(
-            child: Text(
-              label,
-              style: const TextStyle(
-                color: AppColors.primaryDark,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

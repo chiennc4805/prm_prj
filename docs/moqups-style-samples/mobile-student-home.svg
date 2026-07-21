@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" fill="#f7f8fa"/>
+  <rect x="282" y="42" width="460" height="940" rx="10" fill="#ffffff" stroke="#d7dbe1" stroke-width="2"/>
+  <rect x="282" y="42" width="460" height="78" rx="10" fill="#ffffff"/>
+  <line x1="282" y1="120" x2="742" y2="120" stroke="#e3e6ea"/>
+  <text x="310" y="89" font-family="Arial" font-size="21" font-weight="800" fill="#292d34">FPT Schools</text>
+  <text x="656" y="88" font-family="Arial" font-size="12" fill="#676c74">Thông báo</text>
+  <circle cx="714" cy="81" r="13" fill="#ffffff" stroke="#aeb3bb"/>
+
+  <rect x="306" y="147" width="412" height="128" rx="16" fill="#fff7f0" stroke="#efd7c5"/>
+  <rect x="306" y="147" width="5" height="128" rx="3" fill="#f27622"/>
+  <circle cx="350" cy="194" r="22" fill="#fff4eb" stroke="#f27622"/>
+  <text x="350" y="201" font-family="Arial" font-size="17" font-weight="800" fill="#d95e12" text-anchor="middle">L</text>
+  <text x="388" y="184" font-family="Arial" font-size="12" fill="#8c9199">Xin chào,</text>
+  <text x="388" y="208" font-family="Arial" font-size="18" font-weight="800" fill="#292d34">Lê Minh An</text>
+  <text x="388" y="234" font-family="Arial" font-size="12" fill="#747a83">Lớp 10A1  ·  HS001</text>
+
+  <text x="306" y="318" font-family="Arial" font-size="11" font-weight="800" fill="#898f98" letter-spacing="1.5">HỌC TẬP</text>
+  <rect x="306" y="340" width="197" height="128" rx="14" fill="#fff5ed" stroke="#f0d5c0"/>
+  <circle cx="471" cy="375" r="11" fill="#f27622" opacity=".18"/>
+  <text x="326" y="383" font-family="Arial" font-size="15" font-weight="800" fill="#292d34">Điểm học kỳ</text>
+  <text x="326" y="407" font-family="Arial" font-size="11" fill="#8b9098">Kết quả học tập</text>
+  <line x1="326" y1="435" x2="474" y2="435" stroke="#e6e8eb"/>
+  <text x="477" y="447" font-family="Arial" font-size="19" fill="#f27622" text-anchor="end">›</text>
+
+  <rect x="521" y="340" width="197" height="128" rx="14" fill="#f3f7fc" stroke="#d7e2ef"/>
+  <circle cx="686" cy="375" r="11" fill="#628fbe" opacity=".2"/>
+  <text x="541" y="383" font-family="Arial" font-size="15" font-weight="800" fill="#292d34">Lịch học</text>
+  <text x="541" y="407" font-family="Arial" font-size="11" fill="#8b9098">Theo tuần</text>
+  <line x1="541" y1="435" x2="689" y2="435" stroke="#e6e8eb"/>
+  <text x="692" y="447" font-family="Arial" font-size="19" fill="#f27622" text-anchor="end">›</text>
+
+  <text x="306" y="520" font-family="Arial" font-size="11" font-weight="800" fill="#898f98" letter-spacing="1.5">HOẠT ĐỘNG</text>
+  <rect x="306" y="542" width="197" height="128" rx="14" fill="#fff8ed" stroke="#eedfc9"/>
+  <circle cx="471" cy="577" r="11" fill="#d99a3d" opacity=".2"/>
+  <text x="326" y="585" font-family="Arial" font-size="15" font-weight="800" fill="#292d34">Sự kiện</text>
+  <text x="326" y="609" font-family="Arial" font-size="11" fill="#8b9098">Hoạt động toàn trường</text>
+  <line x1="326" y1="637" x2="474" y2="637" stroke="#e6e8eb"/>
+  <text x="477" y="649" font-family="Arial" font-size="19" fill="#f27622" text-anchor="end">›</text>
+
+  <rect x="521" y="542" width="197" height="128" rx="14" fill="#f2f8f4" stroke="#d6e6da"/>
+  <circle cx="686" cy="577" r="11" fill="#5e9b70" opacity=".2"/>
+  <text x="541" y="585" font-family="Arial" font-size="15" font-weight="800" fill="#292d34">Câu lạc bộ</text>
+  <text x="541" y="609" font-family="Arial" font-size="11" fill="#8b9098">Hoạt động ngoại khóa</text>
+  <line x1="541" y1="637" x2="689" y2="637" stroke="#e6e8eb"/>
+  <text x="692" y="649" font-family="Arial" font-size="19" fill="#f27622" text-anchor="end">›</text>
+
+  <rect x="306" y="724" width="412" height="76" rx="13" fill="#faf6fc" stroke="#e4daea"/>
+  <text x="328" y="756" font-family="Arial" font-size="13" font-weight="700" fill="#292d34">Thông báo mới nhất</text>
+  <text x="328" y="780" font-family="Arial" font-size="11" fill="#8b9098">Lịch kiểm tra Toán lớp 10A1</text>
+  <rect x="306" y="842" width="412" height="52" rx="12" fill="#fff5ed"/>
+  <text x="512" y="874" font-family="Arial" font-size="13" font-weight="800" fill="#d95e12" text-anchor="middle">Xem tất cả thông báo</text>
+</svg>
